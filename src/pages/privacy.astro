@@ -1,0 +1,59 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { business } from '../data/business';
+const connected = Boolean(import.meta.env.PUBLIC_LEAD_ENDPOINT);
+---
+
+<Layout
+  title="Privacy"
+  description="How the Resolve Junk Solutions website handles project inquiries, optional photos, and analytics."
+  crumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Privacy', url: '/privacy' },
+  ]}
+>
+  <div class="wrap">
+    <section class="page-hero">
+      <p class="eyebrow">YOUR INFORMATION</p>
+      <h1>Privacy, plainly.</h1>
+    </section>
+    <div class="prose page-content">
+      <h2>Project inquiries</h2>
+      <p>
+        {connected
+          ? 'The request form sends the details you enter and any photos you choose to attach to our inquiry service. We use them to review your project and respond to you.'
+          : 'Online requests are not open yet. The preview form does not send or save the information you enter.'}
+      </p>
+      <p>
+        The form asks for a name, service ZIP, a description, and a way to
+        respond. A street address, timeframe, notes, and photos are optional. A
+        project inquiry is not a subscription to marketing messages.
+      </p>
+      <h2>Photos</h2>
+      <p>
+        Only include images needed to explain the job. Avoid personal documents,
+        people, and valuables. Image files can contain embedded location or
+        device information.
+      </p>
+      <h2>Website analytics</h2>
+      <p>
+        This version does not install advertising trackers or third-party
+        analytics. It exposes local browser events for features such as quote
+        clicks; those events exclude names, contact details, and form content.
+        Hosting providers may process basic request logs to operate the website.
+      </p>
+      <h2>Questions about your information</h2>
+      {business.email ? (
+        <p>
+          Email <a href={`mailto:${business.email}`}>{business.email}</a> with
+          questions about information you have shared.
+        </p>
+      ) : (
+        <p>
+          A business privacy contact will be published before online inquiries
+          open.
+        </p>
+      )}
+    </div>
+  </div>
+</Layout>

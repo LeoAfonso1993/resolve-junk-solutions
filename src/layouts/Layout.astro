@@ -1,0 +1,222 @@
+---
+import '@fontsource/barlow-condensed/700.css';
+import '@fontsource/barlow-condensed/600.css';
+import '@fontsource-variable/dm-sans';
+import '../styles/global.css';
+import '../styles/redesign.css';
+import { business, PRE_LAUNCH_MODE, quoteLabel } from '../data/business';
+import { absolute, graph } from '../lib/seo';
+interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+  crumbs?: { name: string; url: string }[];
+  service?: string;
+}
+const {
+  title,
+  description,
+  noindex = false,
+  crumbs = [],
+  service,
+} = Astro.props;
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const nav = [
+  ['/services', 'Services'],
+  ['/pricing', 'Pricing'],
+  ['/about', 'About Us'],
+  ['/service-area', 'Service Area'],
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#242721" />
+    <title>{title} | {business.name}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={absolute(path)} />
+    <meta name="robots" content={noindex ? 'noindex,follow' : 'index,follow'} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={`${title} | ${business.name}`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={absolute(path)} />
+    <meta property="og:site_name" content={business.name} />
+    <meta property="og:image" content={absolute('/social-card.png')} />
+    <meta
+      property="og:image:alt"
+      content="Resolve Junk Solutions — Lancaster County, Pennsylvania"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={absolute('/social-card.png')} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(graph(path, crumbs, service)).replace(
+        /</g,
+        '\\u003c',
+      )}
+    ></script>
+  </head>
+  <body class:list={[{ 'quote-page': path === '/contact' }]}>
+    <a class="skip-link" href="#main">
+      Skip to content
+    </a>
+    <div class="announcement">
+      <span class="status-dot"></span>
+      {PRE_LAUNCH_MODE
+        ? 'Good things are coming. Launching soon in Lancaster County.'
+        : 'Locally owned. Proudly serving Lancaster County.'}
+      <a href="/contact">
+        {PRE_LAUNCH_MODE ? 'Plan ahead' : 'Get in touch'}{' '}
+        <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Resolve Junk Solutions home">
+        <img
+          src="/brand/lockup-light.svg"
+          width="224"
+          height="65"
+          alt="Resolve Junk Solutions"
+        />
+      </a>
+      <nav class="desktop-nav" aria-label="Main navigation">
+        {nav.map(([url, label]) => (
+          <a
+            href={url}
+            aria-current={path.startsWith(url) ? 'page' : undefined}
+          >
+            {label}
+          </a>
+        ))}
+      </nav>
+      <a class="button header-cta" href="/contact" data-event="quote_cta_click">
+        {quoteLabel}
+        <span aria-hidden="true">↗</span>
+      </a>
+      <details class="mobile-menu">
+        <summary>
+          Menu <span aria-hidden="true">☰</span>
+        </summary>
+        <nav aria-label="Mobile navigation">
+          {nav.map(([url, label]) => (
+            <a href={url}>{label}</a>
+          ))}
+          <a href="/contact">{quoteLabel}</a>
+        </nav>
+      </details>
+    </header>
+    <main id="main">
+      {crumbs.length > 0 && (
+        <nav class="breadcrumbs wrap" aria-label="Breadcrumb">
+          {crumbs.map((c, i) => (
+            <>
+              {i > 0 && <span aria-hidden="true">/</span>}
+              {i === crumbs.length - 1 ? (
+                <span aria-current="page">{c.name}</span>
+              ) : (
+                <a href={c.url}>{c.name}</a>
+              )}
+            </>
+          ))}
+        </nav>
+      )}
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="footer-top wrap">
+        <div>
+          <a class="brand" href="/">
+            <img
+              src="/brand/lockup-dark.svg"
+              width="260"
+              height="76"
+              alt="Resolve Junk Solutions"
+            />
+          </a>
+          <p>
+            Clear the clutter.
+            <br />
+            Keep the good stuff.
+          </p>
+          <span class="muted">Locally owned in Lancaster County, PA.</span>
+        </div>
+        <div>
+          <h2>Make some room</h2>
+          <a href="/services">Our services</a>
+          <a href="/pricing">How pricing works</a>
+          <a href="/contact">{quoteLabel}</a>
+        </div>
+        <div>
+          <h2>Around here</h2>
+          <a href="/about">Our story</a>
+          <a href="/service-area">Service area</a>
+          {business.phone && (
+            <a
+              href={`tel:${business.phone.replace(/[^+\d]/g, '')}`}
+              data-event="phone_click"
+            >
+              {business.phone}
+            </a>
+          )}
+          {business.email && (
+            <a href={`mailto:${business.email}`}>{business.email}</a>
+          )}
+          <span>
+            {PRE_LAUNCH_MODE
+              ? 'Launching soon.'
+              : 'Lancaster County, Pennsylvania'}
+          </span>
+        </div>
+      </div>
+      <div class="footer-bottom wrap">
+        <span>
+          © {new Date().getFullYear()} {business.name}
+        </span>
+        <a href="/privacy">Privacy</a>
+        <span>Good neighbors. Clear spaces.</span>
+      </div>
+    </footer>
+    <div class="mobile-cta">
+      <a href="/contact" data-event="quote_cta_click">
+        {quoteLabel} <span aria-hidden="true">↗</span>
+      </a>
+      {business.phone && (
+        <a
+          href={`tel:${business.phone.replace(/[^+\d]/g, '')}`}
+          data-event="phone_click"
+        >
+          Call Us
+        </a>
+      )}
+    </div>
+    <script>
+      import { track, type AnalyticsEvent } from '../lib/analytics';
+      document.addEventListener('click', (e) => {
+        const target = (e.target as Element).closest<HTMLElement>(
+          '[data-event]',
+        );
+        if (target)
+          track(target.dataset.event as AnalyticsEvent, {
+            path: location.pathname,
+          });
+      });
+      if (/^\/services\/.+/.test(location.pathname))
+        track('service_page_view', { path: location.pathname });
+      if (/^\/service-area\/.+/.test(location.pathname))
+        track('location_page_view', { path: location.pathname });
+      const menu = document.querySelector<HTMLDetailsElement>('.mobile-menu');
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && menu?.open) {
+          menu.open = false;
+          menu.querySelector('summary')?.focus();
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,320 @@
+---
+import { PRE_LAUNCH_MODE } from '../data/business';
+import { intakeOptions } from '../data/intake';
+const endpoint = import.meta.env.PUBLIC_LEAD_ENDPOINT || '';
+---
+
+<div class="quote-shell">
+  <div class="quote-progress">
+    <div>
+      <span id="step-counter">STEP 1 OF 5</span>
+      <span id="step-label">Your location</span>
+    </div>
+    <div class="progress-track">
+      <span id="progress-fill" style="width:20%"></span>
+    </div>
+  </div>
+  <form id="quote-form" data-endpoint={endpoint} novalidate>
+    {!endpoint && (
+      <p class="preview-note">
+        Explore the quote process. Online sending opens soon; nothing is saved
+        or sent yet.
+      </p>
+    )}
+    <fieldset data-step="0">
+      <legend>
+        WHERE’S THE
+        <br />
+        <em>JUNK?</em>
+      </legend>
+      <p class="step-intro">
+        Start with the property’s ZIP code. We’re local to Lancaster County,
+        Pennsylvania.
+      </p>
+      <div class="field zip-field">
+        <label for="zip">Service ZIP code *</label>
+        <input
+          id="zip"
+          name="zip"
+          autocomplete="postal-code"
+          inputmode="numeric"
+          pattern="[0-9]{5}"
+          maxlength="5"
+          placeholder="e.g. 17601"
+          required
+          title="Enter a five-digit ZIP code"
+        />
+        <small>We’ll confirm coverage when we review your request.</small>
+      </div>
+      <div class="quote-expectation">
+        <span aria-hidden="true">↗</span>
+        <p>
+          {PRE_LAUNCH_MODE
+            ? 'We’re launching soon. You can plan a future pickup; dates and availability aren’t confirmed yet.'
+            : 'Your request starts an estimate. A pickup date is confirmed separately.'}
+        </p>
+      </div>
+    </fieldset>
+    <fieldset data-step="1" hidden>
+      <legend>
+        WHAT’S
+        <br />
+        <em>GOING?</em>
+      </legend>
+      <p class="step-intro">
+        Choose all that apply. A rough idea is a great start.
+      </p>
+      <fieldset class="option-group">
+        <legend>What needs to be removed? *</legend>
+        <div class="choice-grid">
+          {intakeOptions.services.map(([value, label]) => (
+            <label class="choice">
+              <input type="checkbox" name="categories" value={value} />
+              <span>{label}</span>
+              <b aria-hidden="true">+</b>
+            </label>
+          ))}
+        </div>
+        <p class="field-error" id="category-error" role="alert"></p>
+      </fieldset>
+      <div class="field">
+        <label for="volume">About how much is there? *</label>
+        <select id="volume" name="volume" required>
+          <option value="">Choose an approximate amount</option>
+          {intakeOptions.volumes.map(([value, label]) => (
+            <option value={value}>{label}</option>
+          ))}
+        </select>
+      </div>
+      <div class="field">
+        <label for="items">A quick description *</label>
+        <textarea
+          id="items"
+          name="items"
+          required
+          minlength="3"
+          maxlength="3000"
+          placeholder="An old couch, two chairs, and a few boxes in the garage…"
+        ></textarea>
+      </div>
+      <div class="upload-area">
+        <label for="photos">
+          <span aria-hidden="true">＋</span> Add photos{' '}
+          <small>Optional, but helpful for your estimate</small>
+        </label>
+        <input
+          id="photos"
+          name="photos"
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          multiple
+          aria-describedby="photo-help"
+        />
+        <p id="photo-help">Up to 4 JPG, PNG, or WebP photos. Max 5 MB each.</p>
+        <div id="photo-preview" class="photo-preview" aria-live="polite"></div>
+      </div>
+    </fieldset>
+    <fieldset data-step="2" hidden>
+      <legend>
+        LET’S PLAN
+        <br />
+        <em>THE DETAILS.</em>
+      </legend>
+      <p class="step-intro">
+        Tell us about timing and access. We’ll work out the specifics with you.
+      </p>
+      <fieldset class="option-group">
+        <legend>When would you like it gone? *</legend>
+        <div class="choice-grid">
+          {intakeOptions.timeframes.map(([value, label]) => (
+            <label class="choice">
+              <input type="radio" name="timeframe" value={value} required />
+              <span>{label}</span>
+              <b aria-hidden="true">○</b>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+      <p class="timing-note">
+        {PRE_LAUNCH_MODE
+          ? 'We’re pre-launch. Timing is a preference, not a confirmed pickup.'
+          : 'Requested timing is subject to availability.'}
+      </p>
+      <div class="form-grid">
+        <div class="field">
+          <label for="access">Where are the items? *</label>
+          <select id="access" name="access" required>
+            <option value="">Choose access</option>
+            {intakeOptions.access.map(([v, l]) => (
+              <option value={v}>{l}</option>
+            ))}
+          </select>
+        </div>
+        <div class="field">
+          <label for="propertyType">Property type *</label>
+          <select id="propertyType" name="propertyType" required>
+            <option value="">Choose property type</option>
+            {intakeOptions.properties.map(([v, l]) => (
+              <option value={v}>{l}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="notes">
+          Anything we should plan around? <small>(optional)</small>
+        </label>
+        <textarea
+          id="notes"
+          name="notes"
+          maxlength="3000"
+          placeholder="Narrow stairs, parking, a move-out deadline, or special materials…"
+        ></textarea>
+      </div>
+    </fieldset>
+    <fieldset data-step="3" hidden>
+      <legend>
+        HOW CAN WE
+        <br />
+        <em>REACH YOU?</em>
+      </legend>
+      <p class="step-intro">
+        Just a way to talk through your project. No account needed.
+      </p>
+      <div class="field">
+        <label for="name">Your name *</label>
+        <input
+          id="name"
+          name="name"
+          autocomplete="name"
+          maxlength="100"
+          required
+        />
+      </div>
+      <p id="contact-help">Add a phone number or email. Either works.</p>
+      <div class="form-grid">
+        <div class="field">
+          <label for="phone">Phone</label>
+          <input
+            id="phone"
+            name="phone"
+            type="tel"
+            autocomplete="tel"
+            maxlength="30"
+            aria-describedby="contact-help"
+          />
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            maxlength="254"
+            aria-describedby="contact-help"
+          />
+        </div>
+      </div>
+      <div class="field">
+        <label for="contactPreference">Preferred way to hear from us</label>
+        <select id="contactPreference" name="contactPreference">
+          <option value="either">No preference</option>
+          <option value="phone">Phone call</option>
+          <option value="email">Email</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="address">
+          Street address <small>(optional for now)</small>
+        </label>
+        <input
+          id="address"
+          name="address"
+          autocomplete="street-address"
+          maxlength="250"
+        />
+      </div>
+      <p class="consent">
+        We’ll use these details to respond to your request. This does not sign
+        you up for marketing. <a href="/privacy">Privacy details</a>.
+      </p>
+    </fieldset>
+    <fieldset data-step="4" hidden>
+      <legend>
+        LOOK GOOD?
+        <br />
+        <em>LET’S RESOLVE IT.</em>
+      </legend>
+      <p class="step-intro">
+        Here’s your request. You can change any detail before sending.
+      </p>
+      <div id="review-summary" class="review-summary"></div>
+      <div class="quote-expectation">
+        <span aria-hidden="true">✓</span>
+        <p>
+          {PRE_LAUNCH_MODE
+            ? 'This is a future-service inquiry. We’ll confirm coverage, acceptance, and availability before discussing a pickup.'
+            : 'We’ll review your request and contact you to discuss the estimate. This does not book a pickup.'}
+        </p>
+      </div>
+      {!endpoint && (
+        <p class="notice">
+          The quote experience is ready to explore. Sending will be available
+          when online requests open. Your details have not been saved or sent.
+        </p>
+      )}
+      <p class="consent">
+        By sending, you ask Resolve Junk Solutions to contact you about this
+        project.
+      </p>
+    </fieldset>
+    <div class="honeypot" aria-hidden="true">
+      <label for="website">Leave blank</label>
+      <input id="website" name="website" tabindex="-1" autocomplete="off" />
+    </div>
+    <input
+      type="hidden"
+      name="mode"
+      value={PRE_LAUNCH_MODE ? 'pre-launch' : 'live'}
+    />
+    <input type="hidden" name="startedAt" />
+    <div class="wizard-actions">
+      <button class="back-button" type="button" id="previous-step" hidden>
+        ← Back
+      </button>
+      <button class="button" type="submit" id="next-step">
+        Continue <span aria-hidden="true">→</span>
+      </button>
+    </div>
+    <p
+      id="form-status"
+      class="form-status"
+      role="status"
+      aria-live="polite"
+      tabindex="-1"
+    ></p>
+    <noscript>
+      <p>
+        Enable JavaScript to use the guided quote form. No information is
+        submitted without it.
+      </p>
+    </noscript>
+  </form>
+  <div id="quote-success" hidden tabindex="-1">
+    <span class="success-check">✓</span>
+    <h2>
+      YOU’RE ON
+      <br />
+      OUR RADAR.
+    </h2>
+    <p>
+      Your request was received. We’ll use the contact details you provided to
+      talk through the project. A pickup has not been booked.
+    </p>
+    <a href="/" class="text-link">
+      Back to home →
+    </a>
+  </div>
+</div>
+<script src="../lib/quote-wizard.ts"></script>

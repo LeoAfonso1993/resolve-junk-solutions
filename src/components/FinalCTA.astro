@@ -1,0 +1,21 @@
+---
+import CTA from './CTA.astro';
+import { PRE_LAUNCH_MODE } from '../data/business';
+---
+
+<section class="final-cta">
+  <div>
+    <p class="eyebrow">LESS CLUTTER. MORE POSSIBILITY.</p>
+    <h2>
+      A little space can
+      <br />
+      make a big difference.
+    </h2>
+    <p>
+      {PRE_LAUNCH_MODE
+        ? 'Have a project in mind? Tell us what you’re planning for after launch.'
+        : 'Tell us what needs to go. Let’s figure out the next step.'}
+    </p>
+  </div>
+  <CTA />
+</section>

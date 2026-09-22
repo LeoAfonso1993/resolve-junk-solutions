@@ -1,0 +1,25 @@
+---
+import { services } from '../data/services';
+import Icon from './Icon.astro';
+interface Props {
+  limit?: number;
+  slugs?: string[];
+}
+const { limit = 9, slugs } = Astro.props;
+const entries = (
+  slugs ? services.filter((s) => slugs.includes(s.slug)) : services
+).slice(0, limit);
+---
+
+<div class="service-grid">
+  {entries.map((s) => (
+    <a class="service-card" href={`/services/${s.slug}`}>
+      <Icon name={s.icon} />
+      <h3>{s.title}</h3>
+      <p>{s.short}</p>
+      <span class="card-arrow" aria-hidden="true">
+        ↗
+      </span>
+    </a>
+  ))}
+</div>

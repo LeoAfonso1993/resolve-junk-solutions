@@ -1,0 +1,52 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ServiceGrid from '../../components/ServiceGrid.astro';
+import FinalCTA from '../../components/FinalCTA.astro';
+import { PRE_LAUNCH_MODE } from '../../data/business';
+---
+
+<Layout
+  title="Junk Removal & Cleanout Services"
+  description="Explore furniture removal, appliance removal, garage and basement cleanouts, and other planned junk removal services for Lancaster County."
+  crumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Services', url: '/services' },
+  ]}
+>
+  <div class="wrap">
+    <section class="page-hero">
+      <p class="eyebrow">SPACE FOR SOMETHING BETTER</p>
+      <h1>What’s in your way?</h1>
+      <p>
+        A couch you no longer need. A garage full of someday. A home ready for
+        its next chapter. Start with the service that fits your project.
+      </p>
+      {PRE_LAUNCH_MODE && (
+        <div class="notice">
+          These are our planned services for Lancaster County. We’re preparing
+          to launch; item acceptance and availability must be confirmed before
+          scheduling.
+        </div>
+      )}
+    </section>
+    <section class="page-content" aria-label="Removal services">
+      <ServiceGrid />
+      <div class="prose">
+        <h2>Not sure where your project fits?</h2>
+        <p>
+          You don’t need to know the category. Describe what needs to go,
+          roughly how much there is, and where it is located. Mixed loads and
+          unusual items can be reviewed together.
+        </p>
+        <p>
+          Hazardous materials, unknown substances, and special-handling
+          appliances need individual review. A service listing is not a
+          guarantee that every item can be accepted.
+        </p>
+      </div>
+    </section>
+    <div class="section">
+      <FinalCTA />
+    </div>
+  </div>
+</Layout>

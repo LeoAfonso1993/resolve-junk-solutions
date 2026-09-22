@@ -1,0 +1,36 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import truck from '../assets/truck-concept.png';
+import garage from '../assets/garage-concept.png';
+interface Props {
+  src?: ImageMetadata;
+  alt?: string;
+  kind?: 'truck' | 'family';
+}
+const { src, alt = '', kind = 'truck' } = Astro.props;
+---
+
+<figure class="editorial-photo">
+  <Image
+    src={src || (kind === 'truck' ? truck : garage)}
+    alt={
+      src
+        ? alt
+        : kind === 'truck'
+          ? 'AI concept of a Resolve-branded pickup and trailer outside a home.'
+          : 'Illustrative AI concept of household items ready for a garage cleanout.'
+    }
+    widths={[480, 800, 1200]}
+    sizes="(max-width: 760px) 100vw, 50vw"
+    format="webp"
+    loading="lazy"
+  />
+  <figcaption>
+    {src
+      ? ''
+      : kind === 'truck'
+        ? 'Truck concept · Original owner photo coming soon'
+        : 'Illustrative concept · Original family photo coming soon'}
+  </figcaption>
+</figure>

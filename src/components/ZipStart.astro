@@ -1,0 +1,41 @@
+---
+interface Props {
+  id?: string;
+}
+const { id = 'hero-zip' } = Astro.props;
+---
+
+<form class="zip-start" action="/contact" method="get" data-zip-start>
+  <label for={id}>Let’s start with your ZIP code</label>
+  <div class="zip-controls">
+    <span class="zip-pin" aria-hidden="true">
+      ⌖
+    </span>
+    <input
+      id={id}
+      name="zip"
+      inputmode="numeric"
+      autocomplete="postal-code"
+      pattern="[0-9]{5}"
+      maxlength="5"
+      placeholder="Enter ZIP code"
+      aria-describedby={`${id}-help`}
+      title="Enter a five-digit ZIP code"
+      required
+    />
+    <button type="submit">
+      Get a Free Quote <span aria-hidden="true">→</span>
+    </button>
+  </div>
+  <p id={`${id}-help`}>No payment needed. No pressure to book.</p>
+</form>
+<script>
+  import { track } from '../lib/analytics';
+  document
+    .querySelectorAll<HTMLFormElement>('[data-zip-start]')
+    .forEach((form) =>
+      form.addEventListener('submit', () =>
+        track('quote_cta_click', { source: 'hero_zip' }),
+      ),
+    );
+</script>

@@ -1,0 +1,77 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Photo from '../components/Photo.astro';
+import { PRE_LAUNCH_MODE } from '../data/business';
+import FinalCTA from '../components/FinalCTA.astro';
+---
+
+<Layout
+  title="About Our Locally Owned Company"
+  description="Meet the thinking behind Resolve Junk Solutions: a Lancaster County junk removal company built around organization, communication, and respect for your home."
+  crumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'About', url: '/about' },
+  ]}
+>
+  <div class="wrap">
+    <section class="page-hero">
+      <p class="eyebrow">LOCAL ROOTS. STRAIGHTFORWARD VALUES.</p>
+      <h1>
+        Good work starts
+        <br />
+        with giving a care.
+      </h1>
+      <p>
+        We’re building Resolve Junk Solutions around a simple idea: getting rid
+        of unwanted things shouldn’t mean chasing someone for answers.
+      </p>
+    </section>
+    <section class="story-grid page-content">
+      <Photo />
+      <div class="prose">
+        <h2>
+          A practical background.
+          <br />A personal approach.
+        </h2>
+        <p>
+          Our owner brings a background in the Air National Guard and
+          technology/software. Organization, preparation, and clear
+          communication are the habits shaping this company.
+        </p>
+        <p>
+          Junk removal is hands-on work, but the details around it matter too:
+          understanding the request, agreeing on a plan, and respecting the home
+          you’ve been invited into.
+        </p>
+        <p>
+          Resolve is locally owned and operated, with Lancaster County at the
+          center of our plans.
+        </p>
+      </div>
+    </section>
+    <section class="story-grid page-content">
+      <div class="prose">
+        <h2>More room for what matters.</h2>
+        <p>
+          Family is part of why we’re building this business. We know a home is
+          more than the things in it, and that letting some of those things go
+          can be a big step.
+        </p>
+        <p>
+          Sometimes it’s a couch. Sometimes it’s a whole room. Either way, the
+          goal is the same: make the process clear, treat people well, and
+          follow through on the agreed work.
+        </p>
+        <p>
+          {PRE_LAUNCH_MODE
+            ? 'We’re preparing for launch. As the company gets moving, this space will feature our own truck, family, and real work.'
+            : 'As the company grows, this space will feature our own truck, family, and real work.'}
+        </p>
+      </div>
+      <Photo kind="family" />
+    </section>
+    <div class="section">
+      <FinalCTA />
+    </div>
+  </div>
+</Layout>

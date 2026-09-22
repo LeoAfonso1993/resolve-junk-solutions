@@ -1,0 +1,89 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { locations } from '../../data/locations';
+import ServiceGrid from '../../components/ServiceGrid.astro';
+import CTA from '../../components/CTA.astro';
+export function getStaticPaths() {
+  return locations.map((location) => ({
+    params: { slug: location.slug },
+    props: { location },
+  }));
+}
+const { location } = Astro.props;
+---
+
+<Layout
+  title={`Junk Removal Planning in ${location.name}, PA`}
+  description={`Plan a ${location.name}, PA junk removal request with Resolve Junk Solutions. ${location.focus}. Coverage and scheduling require confirmation.`}
+  noindex={!location.confirmed}
+  crumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Service area', url: '/service-area' },
+    { name: location.name, url: `/service-area/${location.slug}` },
+  ]}
+>
+  <div class="wrap">
+    <section class="page-hero">
+      <p class="eyebrow">
+        {location.confirmed ? 'SERVICE AREA' : 'PROPOSED SERVICE AREA'} ·
+        LANCASTER COUNTY
+      </p>
+      <h1>
+        Making room
+        <br />
+        in {location.name}.
+      </h1>
+      <p>{location.tip}</p>
+      <CTA />
+    </section>
+    <section class="content-grid page-content">
+      <div>
+        <h2>Planning service for {location.name}</h2>
+        <p>
+          {location.confirmed
+            ? `${location.name} is in our service area. Tell us about your project so we can review item acceptance and scheduling.`
+            : `${location.name} is part of our proposed Lancaster County coverage. We are still confirming our service area, so please include the ZIP for the actual property before making pickup plans.`}
+        </p>
+        <p>
+          Requests can describe a home, rental property, or a property you are
+          helping coordinate. Let us know who can approve removal, what needs to
+          stay, and how the items can be reached.
+        </p>
+        <h2>{location.focus}</h2>
+        <p>
+          Use the guides below to prepare an item list and useful photos. A
+          request starts a conversation about scope, access, and timing; it does
+          not book a crew or guarantee acceptance.
+        </p>
+        <a href="/pricing" class="text-link">
+          See how an estimate is put together ↗
+        </a>
+      </div>
+      <aside class="callout">
+        <h2>From request to removal</h2>
+        <ol>
+          <li>Share the items, service ZIP, and preferred timing.</li>
+          <li>
+            Confirm coverage, accepted materials, access, and the estimate.
+          </li>
+          <li>Agree on a pickup date when scheduling is available.</li>
+        </ol>
+        <p>We do not maintain a separate office in {location.name}.</p>
+      </aside>
+    </section>
+    <section class="page-content">
+      <h2>Helpful services to explore</h2>
+      <ServiceGrid slugs={location.serviceSlugs} />
+    </section>
+    <section class="page-content">
+      <h2>Other communities in our plans</h2>
+      <div class="city-list">
+        {locations
+          .filter((l) => location.nearby.includes(l.slug))
+          .map((l) => (
+            <a href={`/service-area/${l.slug}`}>{l.name} ↗</a>
+          ))}
+      </div>
+    </section>
+  </div>
+</Layout>

@@ -1,0 +1,90 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import CTA from '../../components/CTA.astro';
+import ServiceGrid from '../../components/ServiceGrid.astro';
+import FinalCTA from '../../components/FinalCTA.astro';
+import { services } from '../../data/services';
+import { PRE_LAUNCH_MODE } from '../../data/business';
+export function getStaticPaths() {
+  return services.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+const { service } = Astro.props;
+---
+
+<Layout
+  title={`${service.title} in Lancaster County, PA`}
+  description={`${service.short} Learn how to prepare for ${service.title.toLowerCase()}, what details help your estimate, and how to plan a Lancaster County pickup.`}
+  service={service.title}
+  crumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Services', url: '/services' },
+    { name: service.title, url: `/services/${service.slug}` },
+  ]}
+>
+  <div class="wrap">
+    <section class="page-hero">
+      <p class="eyebrow">
+        {PRE_LAUNCH_MODE ? 'PLANNED SERVICE' : 'LOCAL REMOVAL'} · LANCASTER
+        COUNTY, PA
+      </p>
+      <h1>{service.title}.</h1>
+      <p>{service.intro}</p>
+      <CTA />
+    </section>
+    <section class="content-grid page-content">
+      <div>
+        <h2>What to include in your request</h2>
+        <ul class="plain-list">
+          {service.items.map((i) => (
+            <li>{i}</li>
+          ))}
+        </ul>
+        <h2>A little preparation helps.</h2>
+        <p>{service.preparation}</p>
+        <h2>Tell us about access.</h2>
+        <p>{service.access}</p>
+        <h2>How your estimate takes shape</h2>
+        <p>
+          The quantity, material type, handling, and route out all affect the
+          scope. A few clear photos can help; if more detail is needed, we’ll
+          discuss the next step before scheduling.
+        </p>
+        <a class="text-link" href="/pricing">
+          Understand the pricing factors ↗
+        </a>
+      </div>
+      <aside class="callout">
+        <h2>Before we make a plan</h2>
+        <p>{service.note}</p>
+        {PRE_LAUNCH_MODE && (
+          <p>
+            <strong>We’re preparing to launch.</strong> Requests are for future
+            service; no pickup date is reserved.
+          </p>
+        )}
+        <p>
+          Planning a project in Lancaster County? Include your ZIP so coverage
+          can be confirmed.
+        </p>
+        <a class="text-link" href="/service-area">
+          Check the planned service area ↗
+        </a>
+      </aside>
+    </section>
+    <section class="page-content">
+      <h2>Other ways to make room.</h2>
+      <ServiceGrid
+        slugs={services
+          .filter((s) => s.slug !== service.slug)
+          .slice(0, 3)
+          .map((s) => s.slug)}
+      />
+    </section>
+    <div class="section">
+      <FinalCTA />
+    </div>
+  </div>
+</Layout>

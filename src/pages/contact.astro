@@ -1,0 +1,54 @@
+---
+import Layout from '../layouts/Layout.astro';
+import LeadForm from '../components/LeadForm.astro';
+import { PRE_LAUNCH_MODE } from '../data/business';
+---
+
+<Layout
+  title={
+    PRE_LAUNCH_MODE
+      ? 'Plan Your Junk Removal Quote'
+      : 'Get a Free Junk Removal Quote'
+  }
+  description="Start with your ZIP, choose what needs to go, and tell us your timing. A simple step-by-step junk removal inquiry for Lancaster County."
+>
+  <div class="quote-layout wrap">
+    <aside class="quote-sidebar">
+      <a href="/" class="quote-home">
+        ← Back to home
+      </a>
+      <p class="eyebrow">A LITTLE LESS ON YOUR PLATE</p>
+      <h1>
+        YOUR SPACE.
+        <br />A FRESH
+        <br />
+        <em>START.</em>
+      </h1>
+      <p>
+        Tell us a little about the job.
+        <br />
+        We’ll help with the next step.
+      </p>
+      <ul>
+        <li>
+          <span>01</span> A few details about your project
+        </li>
+        <li>
+          <span>02</span> An estimate that fits the work
+        </li>
+        <li>
+          <span>03</span> A plan you feel good about
+        </li>
+      </ul>
+      <div class="quote-sidebar-note">
+        <strong>Local to Lancaster County.</strong>
+        <p>
+          {PRE_LAUNCH_MODE
+            ? 'Launching soon. Requests are for future service; no pickup is booked here.'
+            : 'Coverage, materials, and pickup timing are confirmed with you.'}
+        </p>
+      </div>
+    </aside>
+    <LeadForm />
+  </div>
+</Layout>

@@ -1,0 +1,302 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import truck from '../assets/truck-concept.png';
+import garage from '../assets/garage-concept.png';
+import ZipStart from '../components/ZipStart.astro';
+import Icon from '../components/Icon.astro';
+import Faq from '../components/Faq.astro';
+import CTA from '../components/CTA.astro';
+import { locations } from '../data/locations';
+import { services } from '../data/services';
+import { PRE_LAUNCH_MODE } from '../data/business';
+---
+
+<Layout
+  title="Junk Removal in Lancaster County, PA"
+  description={
+    PRE_LAUNCH_MODE
+      ? 'Resolve Junk Solutions is bringing local junk removal to Lancaster County. Start with your ZIP and plan furniture removal, cleanouts, or a future pickup.'
+      : 'Local junk removal in Lancaster County, PA. Tell us your ZIP, what needs to go, and your preferred timing. Get a free quote from Resolve Junk Solutions.'
+  }
+>
+  <section class="new-hero">
+    <div class="hero-photo">
+      <Image
+        src={truck}
+        alt="AI concept of a Resolve-branded truck and trailer; original company photography coming soon."
+        widths={[800, 1200, 1680]}
+        sizes="100vw"
+        format="webp"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
+    <div class="hero-shade"></div>
+    <div class="wrap hero-inner">
+      <div class="hero-main">
+        <p class="eyebrow">
+          <span></span> LOCAL JUNK REMOVAL · LANCASTER COUNTY, PA
+        </p>
+        <h1>
+          YOU’VE GOT JUNK.
+          <br />
+          WE’VE GOT <em>THIS.</em>
+        </h1>
+        <p class="hero-deck">
+          The old couch. The packed garage. The stuff you’re done with.
+          <br class="desktop-only" /> Let’s get it out of your way.
+        </p>
+        <ZipStart />
+        <div class="hero-reassurance">
+          <span>✓ Locally owned</span>
+          <span>✓ Clear estimates</span>
+          <span>✓ Your space, respected</span>
+        </div>
+      </div>
+    </div>
+    <span class="concept-label">
+      AI truck concept · Original photography coming soon
+    </span>
+  </section>
+  <div class="launch-ribbon">
+    <div class="wrap">
+      <span class="ribbon-label">
+        {PRE_LAUNCH_MODE ? 'A NEW LOCAL CREW.' : 'YOUR LOCAL CREW.'}
+      </span>
+      <p>
+        {PRE_LAUNCH_MODE
+          ? 'Launching soon in Lancaster County. Plan ahead for your next cleanout.'
+          : 'Junk removal with clear communication and a straightforward plan.'}
+      </p>
+      <a href="/about">
+        Meet Resolve <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </div>
+  <section class="section wrap services-editorial">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">WHAT CAN WE TAKE OFF YOUR HANDS?</p>
+        <h2>
+          A FEW THINGS.
+          <br />
+          OR A <em>FRESH START.</em>
+        </h2>
+      </div>
+      <p class="heading-aside">
+        One bulky item or a whole room to reclaim.
+        <br />
+        There’s a place to start for every project.
+      </p>
+    </div>
+    <div class="service-feature-grid">
+      <a class="feature-photo" href="/services/garage-cleanouts">
+        <Image
+          src={garage}
+          alt="Illustrative AI concept of furniture and boxes at an open garage."
+          widths={[500, 850]}
+          sizes="(max-width:760px) 100vw, 42vw"
+          format="webp"
+        />
+        <span class="feature-photo-label">Illustrative AI concept</span>
+        <div>
+          <span>MAKE ROOM FOR WHAT’S NEXT</span>
+          <h3>Get your garage back.</h3>
+          <p>
+            Explore garage cleanouts <span aria-hidden="true">↗</span>
+          </p>
+        </div>
+      </a>
+      <div class="service-tiles">
+        {services
+          .filter((s) =>
+            [
+              'furniture-removal',
+              'appliance-removal',
+              'junk-removal',
+              'basement-cleanouts',
+              'estate-cleanouts',
+              'moving-cleanouts',
+            ].includes(s.slug),
+          )
+          .map((s) => (
+            <a href={`/services/${s.slug}`}>
+              <Icon name={s.icon} />
+              <h3>{s.title}</h3>
+              <span aria-hidden="true">↗</span>
+            </a>
+          ))}
+      </div>
+    </div>
+    <div class="service-bottom">
+      <p>
+        {PRE_LAUNCH_MODE
+          ? 'Planned services. Materials and availability confirmed before scheduling.'
+          : 'Materials and availability confirmed before scheduling.'}
+      </p>
+      <a href="/services" class="text-link">
+        See all services <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </section>
+  <section class="new-process">
+    <div class="wrap section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">LESS RUNAROUND. MORE ROOM.</p>
+          <h2>
+            YOUR TO-DO LIST.
+            <br />
+            <em>ONE THING SHORTER.</em>
+          </h2>
+        </div>
+        <p class="heading-aside">
+          {PRE_LAUNCH_MODE
+            ? 'Start planning now. Here’s how removal will work when we launch.'
+            : 'A simple path from “this needs to go” to getting your space back.'}
+        </p>
+      </div>
+      <div class="process-cards">
+        <article>
+          <span>01</span>
+          <h3>Tell us what’s going.</h3>
+          <p>
+            Start with your ZIP. Tell us about the items, add photos if you’d
+            like, and choose your timing.
+          </p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Know the plan. And the price.</h3>
+          <p>
+            We review the details with you. Scope, access, estimate, and pickup
+            are agreed before the work.
+          </p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Get on with the good stuff.</h3>
+          <p>
+            Once your pickup is confirmed, it’s time to clear the clutter and
+            put that space to better use.
+          </p>
+        </article>
+      </div>
+      <CTA />
+    </div>
+  </section>
+  <section class="section wrap resolve-story">
+    <div class="brand-panel">
+      <img
+        src="/brand/logo-dark.svg"
+        width="388"
+        height="276"
+        alt="Resolve Junk Solutions"
+      />
+      <div>
+        <span>BUILT HERE. FOR HERE.</span>
+        <p>LANCASTER COUNTY, PENNSYLVANIA</p>
+      </div>
+    </div>
+    <div>
+      <p class="eyebrow">A LOCAL NAME. A PERSONAL STANDARD.</p>
+      <h2>
+        YOUR HOME.
+        <br />
+        <em>OUR WORD.</em>
+      </h2>
+      <p class="story-lead">
+        Good communication isn’t an extra.
+        <br />
+        Neither is treating your home with respect.
+      </p>
+      <p>
+        We’re building Resolve around the things that matter when you invite
+        someone onto your property: being prepared, being clear, and doing what
+        was agreed.
+      </p>
+      <p>
+        Locally owned. Family-minded. Ready to make an everyday headache a
+        little easier.
+      </p>
+      <a href="/about" class="text-link">
+        The people behind the promise <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </section>
+  <section class="estimate-band">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">NO GUESSING GAMES</p>
+        <h2>
+          BIG PILE?
+          <br />
+          LET’S TALK <em>DETAILS.</em>
+        </h2>
+      </div>
+      <div>
+        <p>
+          Volume, materials, and access shape your estimate. A photo helps us
+          see what you see—without asking you to measure everything.
+        </p>
+        <a href="/pricing" class="text-link">
+          See how pricing works ↗
+        </a>
+      </div>
+    </div>
+  </section>
+  <section class="section wrap area-section">
+    <div>
+      <p class="eyebrow">THIS IS OUR NECK OF THE WOODS</p>
+      <h2>
+        LANCASTER COUNTY.
+        <br />
+        <em>THAT’S HOME.</em>
+      </h2>
+      <p>
+        {PRE_LAUNCH_MODE
+          ? 'We’re planning service across Lancaster County. Start with your ZIP and we’ll confirm coverage for your property.'
+          : 'Start with your ZIP and we’ll confirm coverage for your Lancaster County property.'}
+      </p>
+      <a href="/service-area" class="text-link">
+        Explore our service area ↗
+      </a>
+    </div>
+    <div class="city-list">
+      {locations.map((l) => (
+        <a href={`/service-area/${l.slug}`}>
+          {l.name}
+          <span aria-hidden="true">↗</span>
+        </a>
+      ))}
+    </div>
+  </section>
+  <section class="faq-section">
+    <div class="section wrap faq-grid">
+      <div>
+        <p class="eyebrow">BEFORE YOU ASK</p>
+        <h2>
+          GOOD QUESTIONS.
+          <br />
+          <em>STRAIGHT ANSWERS.</em>
+        </h2>
+        <a href="/contact" class="text-link">
+          Tell us about your project ↗
+        </a>
+      </div>
+      <Faq />
+    </div>
+  </section>
+  <section class="closing-quote">
+    <div class="wrap">
+      <p class="eyebrow">MAKE SOME SPACE FOR YOURSELF</p>
+      <h2>
+        LET’S GET YOUR
+        <br />
+        <em>SPACE BACK.</em>
+      </h2>
+      <ZipStart id="closing-zip" />
+    </div>
+  </section>
+</Layout>

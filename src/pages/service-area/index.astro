@@ -1,0 +1,57 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { PRE_LAUNCH_MODE } from '../../data/business';
+import { locations } from '../../data/locations';
+import FinalCTA from '../../components/FinalCTA.astro';
+---
+
+<Layout
+  title={
+    PRE_LAUNCH_MODE
+      ? 'Planned Lancaster County Service Area'
+      : 'Lancaster County Service Area'
+  }
+  description="Explore Resolve Junk Solutions’ planned Lancaster County coverage, including Lancaster, Lititz, Ephrata, Willow Street, and surrounding communities."
+  crumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Service area', url: '/service-area' },
+  ]}
+>
+  <div class="wrap">
+    <section class="page-hero">
+      <p class="eyebrow">RIGHT HERE IN LANCASTER COUNTY</p>
+      <h1>
+        Local service.
+        <br />
+        Room to breathe.
+      </h1>
+      <p>
+        {PRE_LAUNCH_MODE
+          ? 'We’re planning junk removal and cleanouts for homes and properties across Lancaster County, Pennsylvania.'
+          : 'Junk removal and cleanouts for homes and properties in Lancaster County, Pennsylvania.'}
+      </p>
+      <div class="notice">
+        Coverage is being finalized. The communities below are proposed service
+        areas, not separate business locations. Include your service ZIP to
+        confirm your address.
+      </div>
+    </section>
+    <section
+      class="location-cards page-content"
+      aria-label="Planned communities"
+    >
+      {locations.map((l) => (
+        <article>
+          <h2>{l.name}, PA</h2>
+          <p>{l.tip}</p>
+          <a class="text-link" href={`/service-area/${l.slug}`}>
+            Plan a {l.name} request ↗
+          </a>
+        </article>
+      ))}
+    </section>
+    <div class="section">
+      <FinalCTA />
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,85 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CTA from '../components/CTA.astro';
+import FinalCTA from '../components/FinalCTA.astro';
+import { loadSizes } from '../data/business';
+---
+
+<Layout
+  title="How Junk Removal Pricing Works"
+  description="Understand how volume, materials, access, and disposal requirements affect a junk removal estimate in Lancaster County. No invented prices or surprise assumptions."
+  crumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Pricing', url: '/pricing' },
+  ]}
+>
+  <div class="wrap">
+    <section class="page-hero">
+      <p class="eyebrow">KNOW WHAT GOES INTO THE COST</p>
+      <h1>
+        A clear estimate.
+        <br />A simpler decision.
+      </h1>
+      <p>
+        No two piles are quite the same. The best place to start is with what
+        you have and where it needs to come from.
+      </p>
+      <CTA />
+    </section>
+    <section class="content-grid page-content">
+      <div>
+        <h2>Four things shape the estimate.</h2>
+        <ol class="plain-list">
+          <li>
+            <strong>Volume.</strong> How much room the items take up in a load.
+          </li>
+          <li>
+            <strong>Materials.</strong> Heavy debris and special-handling items
+            can differ from ordinary household clutter.
+          </li>
+          <li>
+            <strong>Labor and access.</strong> Stairs, distance to the truck,
+            tight doors, and disassembly affect the work.
+          </li>
+          <li>
+            <strong>Disposal requirements.</strong> The type of material
+            determines which handling options are appropriate.
+          </li>
+        </ol>
+        <h2>Photos are a useful starting point.</h2>
+        <p>
+          Take a wide photo of the items together, then another of the access
+          route. Mention anything not visible, such as upstairs items or an
+          appliance connection. An on-site look may be needed to confirm the
+          scope.
+        </p>
+        <h2>Thinking in load sizes</h2>
+        <p>
+          We’re considering load-based pricing. These are planning categories,
+          not published rates or guaranteed truck capacities.
+        </p>
+        <div class="load-sizes">
+          {loadSizes.map((s) => (
+            <span>{s}</span>
+          ))}
+        </div>
+        <p>
+          Actual prices and the final pricing model will be added here once
+          confirmed. You’ll need an estimate for your specific job.
+        </p>
+      </div>
+      <aside class="callout">
+        <h2>Help us see the whole picture.</h2>
+        <p>
+          Include your item list, ZIP, photos if you have them, and any stairs
+          or access limitations. Tell us your timing, too.
+        </p>
+        <p>There’s no need to guess how much truck space you’ll need.</p>
+        <CTA />
+      </aside>
+    </section>
+    <div class="section">
+      <FinalCTA />
+    </div>
+  </div>
+</Layout>
