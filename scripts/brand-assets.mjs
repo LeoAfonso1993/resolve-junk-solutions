@@ -19,10 +19,7 @@ for (const [name, base] of [
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 324 94">${defs}<svg x="0" y="0" width="143" height="94" viewBox="55 26 143 94">${art}</svg><svg x="154" y="29" width="170" height="35" viewBox="25 125 194 40">${art}</svg></svg>`,
   );
 }
-fs.writeFileSync(
-  'public/favicon.svg',
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="52 24 150 100"><rect x="52" y="24" width="150" height="100" rx="12" fill="#151515"/><path d="${d}" fill="#ff6200"/></svg>`,
-);
+// Keep the original monogram favicon independent of logo generation.
 await sharp('public/brand/lockup-dark.svg')
   .resize(800)
   .png()
