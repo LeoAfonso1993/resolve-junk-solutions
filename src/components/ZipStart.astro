@@ -1,4 +1,5 @@
 ---
+import { quoteLabel, PRE_LAUNCH_MODE, launchStatus } from '../data/business';
 interface Props {
   id?: string;
 }
@@ -24,10 +25,14 @@ const { id = 'hero-zip' } = Astro.props;
       required
     />
     <button type="submit">
-      Get a Free Quote <span aria-hidden="true">→</span>
+      {quoteLabel} <span aria-hidden="true">→</span>
     </button>
   </div>
-  <p id={`${id}-help`}>No payment needed. No pressure to book.</p>
+  <p id={`${id}-help`}>
+    {PRE_LAUNCH_MODE
+      ? `${launchStatus} No booking or payment today.`
+      : 'No payment needed. No pressure to book.'}
+  </p>
 </form>
 <script>
   import { track } from '../lib/analytics';

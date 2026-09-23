@@ -4,7 +4,13 @@ import '@fontsource/barlow-condensed/600.css';
 import '@fontsource-variable/dm-sans';
 import '../styles/global.css';
 import '../styles/redesign.css';
-import { business, PRE_LAUNCH_MODE, quoteLabel } from '../data/business';
+import {
+  business,
+  PRE_LAUNCH_MODE,
+  quoteLabel,
+  announcement,
+  launchStatus,
+} from '../data/business';
 import { absolute, graph } from '../lib/seo';
 interface Props {
   title: string;
@@ -52,13 +58,19 @@ const nav = [
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta
+      name="twitter:image:alt"
+      content="Resolve Junk Solutions — Lancaster County, Pennsylvania"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta name="twitter:image" content={absolute('/social-card.png')} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <script
       type="application/ld+json"
       set:html={JSON.stringify(graph(path, crumbs, service)).replace(
         /</g,
-        '\\u003c',
+        '\u003c',
       )}
     ></script>
   </head>
@@ -68,9 +80,7 @@ const nav = [
     </a>
     <div class="announcement">
       <span class="status-dot"></span>
-      {PRE_LAUNCH_MODE
-        ? 'Good things are coming. Launching soon in Lancaster County.'
-        : 'Locally owned. Proudly serving Lancaster County.'}
+      {announcement}
       <a href="/contact">
         {PRE_LAUNCH_MODE ? 'Plan ahead' : 'Get in touch'}{' '}
         <span aria-hidden="true">↗</span>
@@ -105,7 +115,12 @@ const nav = [
         </summary>
         <nav aria-label="Mobile navigation">
           {nav.map(([url, label]) => (
-            <a href={url}>{label}</a>
+            <a
+              href={url}
+              aria-current={path.startsWith(url) ? 'page' : undefined}
+            >
+              {label}
+            </a>
           ))}
           <a href="/contact">{quoteLabel}</a>
         </nav>
@@ -168,9 +183,7 @@ const nav = [
             <a href={`mailto:${business.email}`}>{business.email}</a>
           )}
           <span>
-            {PRE_LAUNCH_MODE
-              ? 'Launching soon.'
-              : 'Lancaster County, Pennsylvania'}
+            {PRE_LAUNCH_MODE ? launchStatus : 'Lancaster County, Pennsylvania'}
           </span>
         </div>
       </div>

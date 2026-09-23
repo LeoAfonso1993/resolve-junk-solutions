@@ -1,13 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Photo from '../components/Photo.astro';
-import { PRE_LAUNCH_MODE } from '../data/business';
+import { PRE_LAUNCH_MODE, business, launchStatus } from '../data/business';
 import FinalCTA from '../components/FinalCTA.astro';
 ---
 
 <Layout
   title="About Our Locally Owned Company"
-  description="Meet the thinking behind Resolve Junk Solutions: a Lancaster County junk removal company built around organization, communication, and respect for your home."
+  description="Meet Leo Afonso, owner of Resolve Junk Solutions in Lancaster County and a currently serving Pennsylvania Air National Guard member."
   crumbs={[
     { name: 'Home', url: '/' },
     { name: 'About', url: '/about' },
@@ -34,18 +34,21 @@ import FinalCTA from '../components/FinalCTA.astro';
           <br />A personal approach.
         </h2>
         <p>
-          Our owner brings a background in the Air National Guard and
-          technology/software. Organization, preparation, and clear
-          communication are the habits shaping this company.
+          Resolve is locally owned and operated by {business.owner.name}, who{' '}
+          {business.owner.service}. He’s building the company around clear
+          communication, preparation, and personal responsibility for the work.
         </p>
         <p>
-          Junk removal is hands-on work, but the details around it matter too:
+          Leo’s technology and software background helps with the practical
+          details: keeping requests organized and customers informed. Junk
+          removal is hands-on work, but the details around it matter too:
           understanding the request, agreeing on a plan, and respecting the home
           you’ve been invited into.
         </p>
         <p>
-          Resolve is locally owned and operated, with Lancaster County at the
-          center of our plans.
+          {PRE_LAUNCH_MODE
+            ? `${launchStatus} Lancaster County is the center of our planned service area.`
+            : 'Resolve provides junk removal and cleanouts in Lancaster County, with coverage confirmed for each property.'}
         </p>
       </div>
     </section>

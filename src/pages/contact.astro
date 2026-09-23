@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import LeadForm from '../components/LeadForm.astro';
-import { PRE_LAUNCH_MODE } from '../data/business';
+import { PRE_LAUNCH_MODE, requestExpectation } from '../data/business';
 ---
 
 <Layout
@@ -42,11 +42,7 @@ import { PRE_LAUNCH_MODE } from '../data/business';
       </ul>
       <div class="quote-sidebar-note">
         <strong>Local to Lancaster County.</strong>
-        <p>
-          {PRE_LAUNCH_MODE
-            ? 'Launching soon. Requests are for future service; no pickup is booked here.'
-            : 'Coverage, materials, and pickup timing are confirmed with you.'}
-        </p>
+        <p>{requestExpectation}</p>
       </div>
     </aside>
     <LeadForm />

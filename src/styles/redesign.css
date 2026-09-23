@@ -1366,3 +1366,28 @@ h2 em,
   margin: 0;
   cursor: pointer;
 }
+
+/* Review refinements: keep the existing design, improve thumb and keyboard use. */
+.hero-reassurance {
+  flex-wrap: wrap;
+}
+.review-summary button,
+.photo-preview button {
+  min-width: 44px;
+  min-height: 44px;
+}
+#step-error:empty,
+#photo-error:empty {
+  display: none;
+}
+.location-cards .coverage-status {
+  font-size: 0.72rem;
+}
+@media (max-width: 760px) {
+  .quote-shell .field input,
+  .quote-shell .field textarea,
+  .quote-shell .field select,
+  .zip-controls input {
+    font-size: 16px;
+  }
+}

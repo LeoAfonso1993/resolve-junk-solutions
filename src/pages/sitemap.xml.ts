@@ -1,6 +1,6 @@
 import { business } from '../data/business';
 import { services } from '../data/services';
-import { locations } from '../data/locations';
+import { locations, isIndexableLocation } from '../data/locations';
 export function GET() {
   const paths = [
     '/',
@@ -12,7 +12,7 @@ export function GET() {
     '/privacy',
     ...services.map((s) => `/services/${s.slug}`),
     ...locations
-      .filter((l) => l.confirmed)
+      .filter(isIndexableLocation)
       .map((l) => `/service-area/${l.slug}`),
   ];
   return new Response(

@@ -97,4 +97,8 @@ export const locations = [
   serviceSlugs: serviceSlugs as string[],
   nearby: nearby as string[],
   confirmed: false,
+  contentReady: false, // Verified local operating detail, separately reviewed before indexing.
 }));
+
+export const isIndexableLocation = (location: (typeof locations)[number]) =>
+  location.confirmed && location.contentReady;

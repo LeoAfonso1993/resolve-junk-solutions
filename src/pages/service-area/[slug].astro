@@ -1,7 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { locations } from '../../data/locations';
+import { locations, isIndexableLocation } from '../../data/locations';
 import ServiceGrid from '../../components/ServiceGrid.astro';
+import { PRE_LAUNCH_MODE } from '../../data/business';
 import CTA from '../../components/CTA.astro';
 export function getStaticPaths() {
   return locations.map((location) => ({
@@ -13,9 +14,9 @@ const { location } = Astro.props;
 ---
 
 <Layout
-  title={`Junk Removal Planning in ${location.name}, PA`}
+  title={`${PRE_LAUNCH_MODE || !location.confirmed ? 'Junk Removal Planning' : 'Junk Removal'} in ${location.name}, PA`}
   description={`Plan a ${location.name}, PA junk removal request with Resolve Junk Solutions. ${location.focus}. Coverage and scheduling require confirmation.`}
-  noindex={!location.confirmed}
+  noindex={!isIndexableLocation(location)}
   crumbs={[
     { name: 'Home', url: '/' },
     { name: 'Service area', url: '/service-area' },
@@ -38,10 +39,13 @@ const { location } = Astro.props;
     </section>
     <section class="content-grid page-content">
       <div>
-        <h2>Planning service for {location.name}</h2>
+        <h2>
+          {PRE_LAUNCH_MODE ? 'Planning service for' : 'Service coverage for'}{' '}
+          {location.name}
+        </h2>
         <p>
           {location.confirmed
-            ? `${location.name} is in our service area. Tell us about your project so we can review item acceptance and scheduling.`
+            ? `${location.name} is in our ${PRE_LAUNCH_MODE ? 'planned ' : ''}service area. Tell us about your project so we can review item acceptance and scheduling.`
             : `${location.name} is part of our proposed Lancaster County coverage. We are still confirming our service area, so please include the ZIP for the actual property before making pickup plans.`}
         </p>
         <p>

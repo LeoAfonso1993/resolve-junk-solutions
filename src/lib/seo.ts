@@ -16,6 +16,16 @@ export function graph(
         url: business.url,
         description: `Locally owned junk removal company ${PRE_LAUNCH_MODE ? 'preparing to serve' : 'serving'} ${business.region}.`,
         areaServed: { '@type': 'AdministrativeArea', name: business.region },
+        logo: absolute('/brand/logo-light.svg'),
+        ...(path === '/about'
+          ? {
+              founder: {
+                '@type': 'Person',
+                name: business.owner.name,
+                description: `${business.owner.name} ${business.owner.service}.`,
+              },
+            }
+          : {}),
         ...(business.phone ? { telephone: business.phone } : {}),
         ...(business.email ? { email: business.email } : {}),
         ...(business.socialProfiles.length

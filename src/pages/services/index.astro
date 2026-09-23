@@ -7,7 +7,7 @@ import { PRE_LAUNCH_MODE } from '../../data/business';
 
 <Layout
   title="Junk Removal & Cleanout Services"
-  description="Explore furniture removal, appliance removal, garage and basement cleanouts, and other planned junk removal services for Lancaster County."
+  description={`Explore furniture removal, appliance removal, garage and basement cleanouts, and other ${PRE_LAUNCH_MODE ? 'planned ' : ''}junk removal services for Lancaster County.`}
   crumbs={[
     { name: 'Home', url: '/' },
     { name: 'Services', url: '/services' },

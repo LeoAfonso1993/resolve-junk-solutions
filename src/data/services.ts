@@ -1,6 +1,7 @@
 export const services = [
   {
     slug: 'junk-removal',
+    related: ['furniture-removal', 'garage-cleanouts', 'moving-cleanouts'],
     title: 'Junk removal',
     short: 'A few things, a full room, or a fresh start.',
     icon: 'box',
@@ -19,6 +20,7 @@ export const services = [
   },
   {
     slug: 'furniture-removal',
+    related: ['appliance-removal', 'moving-cleanouts', 'estate-cleanouts'],
     title: 'Furniture removal',
     short: 'Make room for what comes next.',
     icon: 'sofa',
@@ -37,6 +39,7 @@ export const services = [
   },
   {
     slug: 'appliance-removal',
+    related: ['furniture-removal', 'garage-cleanouts', 'moving-cleanouts'],
     title: 'Appliance removal',
     short: 'Out with the old. Space for the new.',
     icon: 'appliance',
@@ -55,6 +58,7 @@ export const services = [
   },
   {
     slug: 'garage-cleanouts',
+    related: ['basement-cleanouts', 'junk-removal', 'yard-debris-removal'],
     title: 'Garage cleanouts',
     short: 'Get your garage back.',
     icon: 'garage',
@@ -73,6 +77,7 @@ export const services = [
   },
   {
     slug: 'basement-cleanouts',
+    related: ['garage-cleanouts', 'furniture-removal', 'estate-cleanouts'],
     title: 'Basement cleanouts',
     short: 'Less downstairs. More breathing room.',
     icon: 'stairs',
@@ -91,6 +96,7 @@ export const services = [
   },
   {
     slug: 'estate-cleanouts',
+    related: ['furniture-removal', 'basement-cleanouts', 'moving-cleanouts'],
     title: 'Estate cleanouts',
     short: 'A thoughtful approach to a big task.',
     icon: 'home',
@@ -109,6 +115,7 @@ export const services = [
   },
   {
     slug: 'moving-cleanouts',
+    related: ['furniture-removal', 'junk-removal', 'estate-cleanouts'],
     title: 'Moving cleanouts',
     short: 'Take the next step with less to carry.',
     icon: 'box',
@@ -127,6 +134,11 @@ export const services = [
   },
   {
     slug: 'yard-debris-removal',
+    related: [
+      'garage-cleanouts',
+      'construction-debris-removal',
+      'junk-removal',
+    ],
     title: 'Yard debris removal',
     short: 'A clearer yard after the cleanup.',
     icon: 'leaf',
@@ -145,6 +157,7 @@ export const services = [
   },
   {
     slug: 'construction-debris-removal',
+    related: ['yard-debris-removal', 'garage-cleanouts', 'junk-removal'],
     title: 'Construction debris removal',
     short: 'Finish the project. Clear the leftovers.',
     icon: 'tools',

@@ -83,6 +83,8 @@ if (form) {
     }
   }
   function show(index: number, focus = true) {
+    if (pending) return;
+    document.querySelector('#step-error')!.textContent = '';
     step = index;
     panels.forEach((p, i) => (p.hidden = i !== step));
     back.hidden = step === 0;
@@ -104,18 +106,16 @@ if (form) {
       const heading = panels[step].querySelector('legend')!;
       heading.tabIndex = -1;
       heading.focus();
-      document
-        .querySelector('.quote-shell')
-        ?.scrollIntoView({
-          behavior: matchMedia('(prefers-reduced-motion: reduce)').matches
-            ? 'instant'
-            : 'smooth',
-          block: 'start',
-        });
+      document.querySelector('.quote-shell')?.scrollIntoView({
+        behavior: matchMedia('(prefers-reduced-motion: reduce)').matches
+          ? 'instant'
+          : 'smooth',
+        block: 'start',
+      });
     }
     track('quote_step_view', { step: step + 1 });
   }
-  function valid() {
+  function valid(report = true) {
     input('name').setCustomValidity(
       input('name').value && !input('name').value.trim()
         ? 'Please enter your name.'
@@ -134,7 +134,8 @@ if (form) {
         ? ''
         : 'Choose at least one type of item.';
       if (!checked.length) {
-        form!.querySelector<HTMLInputElement>('[name=categories]')!.focus();
+        if (report)
+          form!.querySelector<HTMLInputElement>('[name=categories]')!.focus();
         return false;
       }
     }
@@ -168,7 +169,12 @@ if (form) {
     );
     for (const control of controls) {
       if (!control.checkValidity()) {
-        control.reportValidity();
+        if (report) {
+          control.setAttribute('aria-invalid', 'true');
+          document.querySelector('#step-error')!.textContent =
+            control.validationMessage;
+          control.reportValidity();
+        }
         return false;
       }
     }
@@ -181,6 +187,10 @@ if (form) {
     preview.replaceChildren();
     const files = Array.from(photos.files || []);
     photos.setCustomValidity(validatePhotos(files));
+    document.querySelector('#photo-error')!.textContent =
+      photos.validationMessage;
+    (document.querySelector('#clear-photos') as HTMLButtonElement).hidden =
+      !files.length;
     if (!photos.checkValidity()) {
       photos.reportValidity();
       return;
@@ -208,6 +218,14 @@ if (form) {
       preview.append(tile);
     });
   }
+  document.querySelector('#clear-photos')!.addEventListener('click', () => {
+    photos.value = '';
+    renderPhotos();
+    photos.focus();
+  });
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) renderPhotos();
+  });
   photos.addEventListener('change', () => {
     renderPhotos();
     if (photos.files?.length && !photos.validationMessage)
@@ -216,7 +234,19 @@ if (form) {
   window.addEventListener('pagehide', () =>
     photoUrls.forEach(URL.revokeObjectURL),
   );
-  form.addEventListener('input', () => {
+  form.addEventListener('input', (event) => {
+    const target = event.target;
+    if (
+      target instanceof HTMLInputElement ||
+      target instanceof HTMLTextAreaElement ||
+      target instanceof HTMLSelectElement
+    ) {
+      target.setCustomValidity('');
+      target.removeAttribute('aria-invalid');
+    }
+    document.querySelector('#step-error')!.textContent = '';
+    if (form!.querySelector('[name=categories]:checked'))
+      document.querySelector('#category-error')!.textContent = '';
     phone.setCustomValidity('');
     email.setCustomValidity('');
     if (!started) {
@@ -238,7 +268,7 @@ if (form) {
     // Validate every panel again before delivery, including values edited via dev tools.
     for (let i = 0; i < 4; i++) {
       step = i;
-      if (!valid()) {
+      if (!valid(false)) {
         show(i);
         valid();
         return;

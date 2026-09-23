@@ -38,7 +38,7 @@ test('guided request validates contact, previews photos, retries errors and deli
   await page.getByRole('button', { name: 'Remove photo 1' }).click();
   await expect(page.locator('#photo-preview img')).toHaveCount(0);
   await page.getByRole('button', { name: 'Continue' }).click();
-  await page.getByRole('radio', { name: 'Within a week', exact: true }).check();
+  await page.getByRole('radio', { name: 'Within a week of launch', exact: true }).check();
   await page.getByLabel('Where are the items').selectOption('ground');
   await page.getByLabel('Property type').selectOption('home');
   expect(

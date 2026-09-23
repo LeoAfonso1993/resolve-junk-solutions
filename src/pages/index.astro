@@ -1,6 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { Image } from 'astro:assets';
+import Photo from '../components/Photo.astro';
+import { photography } from '../data/photography';
 import truck from '../assets/truck-concept.png';
 import garage from '../assets/garage-concept.png';
 import ZipStart from '../components/ZipStart.astro';
@@ -9,7 +11,7 @@ import Faq from '../components/Faq.astro';
 import CTA from '../components/CTA.astro';
 import { locations } from '../data/locations';
 import { services } from '../data/services';
-import { PRE_LAUNCH_MODE } from '../data/business';
+import { PRE_LAUNCH_MODE, business, launchStatus } from '../data/business';
 ---
 
 <Layout
@@ -23,8 +25,12 @@ import { PRE_LAUNCH_MODE } from '../data/business';
   <section class="new-hero">
     <div class="hero-photo">
       <Image
-        src={truck}
-        alt="AI concept of a Resolve-branded truck and trailer; original company photography coming soon."
+        src={photography.hero.src || truck}
+        alt={
+          photography.hero.src
+            ? photography.hero.alt
+            : 'AI concept of a Resolve-branded truck and trailer; original company photography coming soon.'
+        }
         widths={[800, 1200, 1680]}
         sizes="100vw"
         format="webp"
@@ -50,14 +56,17 @@ import { PRE_LAUNCH_MODE } from '../data/business';
         <ZipStart />
         <div class="hero-reassurance">
           <span>✓ Locally owned</span>
+          <span>✓ Military Service Member</span>
           <span>✓ Clear estimates</span>
           <span>✓ Your space, respected</span>
         </div>
       </div>
     </div>
-    <span class="concept-label">
-      AI truck concept · Original photography coming soon
-    </span>
+    {!photography.hero.src && (
+      <span class="concept-label">
+        AI truck concept · Original photography coming soon
+      </span>
+    )}
   </section>
   <div class="launch-ribbon">
     <div class="wrap">
@@ -66,7 +75,7 @@ import { PRE_LAUNCH_MODE } from '../data/business';
       </span>
       <p>
         {PRE_LAUNCH_MODE
-          ? 'Launching soon in Lancaster County. Plan ahead for your next cleanout.'
+          ? `${launchStatus} Plan ahead for your next cleanout.`
           : 'Junk removal with clear communication and a straightforward plan.'}
       </p>
       <a href="/about">
@@ -93,13 +102,19 @@ import { PRE_LAUNCH_MODE } from '../data/business';
     <div class="service-feature-grid">
       <a class="feature-photo" href="/services/garage-cleanouts">
         <Image
-          src={garage}
-          alt="Illustrative AI concept of furniture and boxes at an open garage."
+          src={photography.service.src || garage}
+          alt={
+            photography.service.src
+              ? photography.service.alt
+              : 'Illustrative AI concept of furniture and boxes at an open garage.'
+          }
           widths={[500, 850]}
           sizes="(max-width:760px) 100vw, 42vw"
           format="webp"
         />
-        <span class="feature-photo-label">Illustrative AI concept</span>
+        {!photography.service.src && (
+          <span class="feature-photo-label">Illustrative AI concept</span>
+        )}
         <div>
           <span>MAKE ROOM FOR WHAT’S NEXT</span>
           <h3>Get your garage back.</h3>
@@ -187,18 +202,22 @@ import { PRE_LAUNCH_MODE } from '../data/business';
     </div>
   </section>
   <section class="section wrap resolve-story">
-    <div class="brand-panel">
-      <img
-        src="/brand/logo-dark.svg"
-        width="388"
-        height="276"
-        alt="Resolve Junk Solutions"
-      />
-      <div>
-        <span>BUILT HERE. FOR HERE.</span>
-        <p>LANCASTER COUNTY, PENNSYLVANIA</p>
+    {photography.owner.src ? (
+      <Photo src={photography.owner.src} alt={photography.owner.alt} />
+    ) : (
+      <div class="brand-panel">
+        <img
+          src="/brand/logo-dark.svg"
+          width="388"
+          height="276"
+          alt="Resolve Junk Solutions"
+        />
+        <div>
+          <span>BUILT HERE. FOR HERE.</span>
+          <p>LANCASTER COUNTY, PENNSYLVANIA</p>
+        </div>
       </div>
-    </div>
+    )}
     <div>
       <p class="eyebrow">A LOCAL NAME. A PERSONAL STANDARD.</p>
       <h2>
@@ -212,9 +231,10 @@ import { PRE_LAUNCH_MODE } from '../data/business';
         Neither is treating your home with respect.
       </p>
       <p>
-        We’re building Resolve around the things that matter when you invite
-        someone onto your property: being prepared, being clear, and doing what
-        was agreed.
+        Resolve is locally owned and operated by {business.owner.name}, who{' '}
+        {business.owner.service}. For Leo, the standard is personal: be
+        prepared, communicate clearly, and follow through on the work you agreed
+        on.
       </p>
       <p>
         Locally owned. Family-minded. Ready to make an everyday headache a

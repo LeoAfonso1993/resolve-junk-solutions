@@ -70,7 +70,10 @@ const { service } = Astro.props;
           can be confirmed.
         </p>
         <a class="text-link" href="/service-area">
-          Check the planned service area ↗
+          {PRE_LAUNCH_MODE
+            ? 'Check the planned service area'
+            : 'Check the service area'}{' '}
+          ↗
         </a>
       </aside>
     </section>
@@ -78,8 +81,7 @@ const { service } = Astro.props;
       <h2>Other ways to make room.</h2>
       <ServiceGrid
         slugs={services
-          .filter((s) => s.slug !== service.slug)
-          .slice(0, 3)
+          .filter((s) => service.related.includes(s.slug))
           .map((s) => s.slug)}
       />
     </section>

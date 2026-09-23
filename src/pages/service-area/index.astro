@@ -11,7 +11,7 @@ import FinalCTA from '../../components/FinalCTA.astro';
       ? 'Planned Lancaster County Service Area'
       : 'Lancaster County Service Area'
   }
-  description="Explore Resolve Junk Solutions’ planned Lancaster County coverage, including Lancaster, Lititz, Ephrata, Willow Street, and surrounding communities."
+  description={`Explore Resolve Junk Solutions’ ${PRE_LAUNCH_MODE ? 'planned ' : ''}Lancaster County coverage. Check individual community status and request confirmation for your property.`}
   crumbs={[
     { name: 'Home', url: '/' },
     { name: 'Service area', url: '/service-area' },
@@ -31,18 +31,28 @@ import FinalCTA from '../../components/FinalCTA.astro';
           : 'Junk removal and cleanouts for homes and properties in Lancaster County, Pennsylvania.'}
       </p>
       <div class="notice">
-        Coverage is being finalized. The communities below are proposed service
-        areas, not separate business locations. Include your service ZIP to
-        confirm your address.
+        The directory shows{' '}
+        {locations.some((l) => !l.confirmed)
+          ? 'coverage status for each proposed community'
+          : 'our confirmed service communities'}
+        . These are not separate business locations. Include your service ZIP so
+        we can confirm your address.
       </div>
     </section>
     <section
       class="location-cards page-content"
-      aria-label="Planned communities"
+      aria-label="Service communities"
     >
       {locations.map((l) => (
         <article>
           <h2>{l.name}, PA</h2>
+          <p class="coverage-status">
+            {l.confirmed
+              ? PRE_LAUNCH_MODE
+                ? 'Planned coverage confirmed'
+                : 'Service area'
+              : 'Proposed coverage · Not yet confirmed'}
+          </p>
           <p>{l.tip}</p>
           <a class="text-link" href={`/service-area/${l.slug}`}>
             Plan a {l.name} request ↗

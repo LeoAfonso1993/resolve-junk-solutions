@@ -1,5 +1,5 @@
 ---
-import { PRE_LAUNCH_MODE } from '../data/business';
+import { PRE_LAUNCH_MODE, requestExpectation } from '../data/business';
 import { intakeOptions } from '../data/intake';
 const endpoint = import.meta.env.PUBLIC_LEAD_ENDPOINT || '';
 ---
@@ -15,6 +15,7 @@ const endpoint = import.meta.env.PUBLIC_LEAD_ENDPOINT || '';
     </div>
   </div>
   <form id="quote-form" data-endpoint={endpoint} novalidate>
+    <p id="step-error" class="field-error" role="alert"></p>
     {!endpoint && (
       <p class="preview-note">
         Explore the quote process. Online sending opens soon; nothing is saved
@@ -48,11 +49,7 @@ const endpoint = import.meta.env.PUBLIC_LEAD_ENDPOINT || '';
       </div>
       <div class="quote-expectation">
         <span aria-hidden="true">↗</span>
-        <p>
-          {PRE_LAUNCH_MODE
-            ? 'We’re launching soon. You can plan a future pickup; dates and availability aren’t confirmed yet.'
-            : 'Your request starts an estimate. A pickup date is confirmed separately.'}
-        </p>
+        <p>{requestExpectation}</p>
       </div>
     </fieldset>
     <fieldset data-step="1" hidden>
@@ -69,7 +66,12 @@ const endpoint = import.meta.env.PUBLIC_LEAD_ENDPOINT || '';
         <div class="choice-grid">
           {intakeOptions.services.map(([value, label]) => (
             <label class="choice">
-              <input type="checkbox" name="categories" value={value} />
+              <input
+                type="checkbox"
+                name="categories"
+                value={value}
+                aria-describedby="category-error"
+              />
               <span>{label}</span>
               <b aria-hidden="true">+</b>
             </label>
@@ -108,9 +110,16 @@ const endpoint = import.meta.env.PUBLIC_LEAD_ENDPOINT || '';
           type="file"
           accept="image/jpeg,image/png,image/webp"
           multiple
-          aria-describedby="photo-help"
+          aria-describedby="photo-help photo-error"
         />
-        <p id="photo-help">Up to 4 JPG, PNG, or WebP photos. Max 5 MB each.</p>
+        <p id="photo-help">
+          Up to 4 JPG, PNG, or WebP photos. Max 5 MB each. Avoid personal
+          documents, people, and valuables.
+        </p>
+        <p id="photo-error" class="field-error" role="alert"></p>
+        <button type="button" id="clear-photos" class="back-button" hidden>
+          Remove selected photos
+        </button>
         <div id="photo-preview" class="photo-preview" aria-live="polite"></div>
       </div>
     </fieldset>

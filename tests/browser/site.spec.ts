@@ -49,7 +49,7 @@ test('ZIP hero opens guided flow; answers survive back/edit; no false delivery',
     .fill('A sofa and two chairs from the living room.');
   await page.getByRole('button', { name: 'Continue' }).click();
   await page
-    .getByRole('radio', { name: 'Within a month', exact: true })
+    .getByRole('radio', { name: 'Within a month of launch', exact: true })
     .check();
   await page.getByLabel('Where are the items').selectOption('stairs');
   await page.getByLabel('Property type').selectOption('home');

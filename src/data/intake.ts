@@ -1,3 +1,4 @@
+import { PRE_LAUNCH_MODE } from './business.ts';
 export const intakeOptions = {
   services: [
     ['furniture', 'Furniture'],
@@ -16,9 +17,12 @@ export const intakeOptions = {
     ['unsure', 'Not sure yet'],
   ],
   timeframes: [
-    ['soon', 'As soon as available'],
-    ['week', 'Within a week'],
-    ['month', 'Within a month'],
+    [
+      'soon',
+      PRE_LAUNCH_MODE ? 'As soon as service starts' : 'As soon as available',
+    ],
+    ['week', PRE_LAUNCH_MODE ? 'Within a week of launch' : 'Within a week'],
+    ['month', PRE_LAUNCH_MODE ? 'Within a month of launch' : 'Within a month'],
     ['flexible', 'I’m flexible'],
     ['planning', 'Just planning'],
   ],

@@ -1,0 +1,8 @@
+# Host-specific: previews stay usable but must not compete in search.
+# Applies to Cloudflare static asset responses, not custom Worker responses.
+https://:version.:subdomain.workers.dev/*
+  X-Robots-Tag: noindex
+
+# Only hashed build assets receive long-lived browser caching.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable

@@ -1,0 +1,15 @@
+import {execFileSync} from 'node:child_process';
+import {readFileSync,mkdtempSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+const output=mkdtempSync(path.join(tmpdir(),'resolve-live-review-'));
+execFileSync('./node_modules/.bin/astro',['build','--outDir',output],{env:{...process.env,PRE_LAUNCH_MODE:'false'},stdio:'pipe'});
+const read=p=>readFileSync(path.join(output,p),'utf8');
+const home=read('index.html');assert(home.includes('Get a Free Quote'));assert(!home.includes('Plan Your Pickup'));assert(!home.includes('Aiming to launch in November 2026'));assert(home.includes('"@type":"LocalBusiness"'));assert(home.includes('Leo Afonso'));
+const service=read('services/furniture-removal/index.html');assert(service.includes('"@type":"Service"'));assert(!service.includes('PLANNED SERVICE'));assert(!service.includes('Check the planned service area'));
+assert(!read('services/index.html').match(/name="description" content="[^"]*planned/));assert(!read('service-area/index.html').match(/name="description" content="[^"]*planned/));
+const contact=read('contact/index.html');assert(contact.includes('As soon as available'));assert(!contact.includes('Within a week of launch'));
+assert(read('service-area/lancaster-pa/index.html').includes('noindex,follow'),'Unapproved location must not become indexable at launch');
+assert(read('_headers').includes('https://:version.:subdomain.workers.dev/*'),'Preview protection survives launch');
+console.log('PASS: isolated live-mode build; CTA, announcement, timing, metadata and schema switch; provisional areas remain noindex. Source and default build unchanged.');
