@@ -4,6 +4,8 @@ import { locations, isIndexableLocation } from '../../data/locations';
 import ServiceGrid from '../../components/ServiceGrid.astro';
 import { PRE_LAUNCH_MODE } from '../../data/business';
 import CTA from '../../components/CTA.astro';
+import { Image } from 'astro:assets';
+import { landmarks } from '../../data/landmarks';
 export function getStaticPaths() {
   return locations.map((location) => ({
     params: { slug: location.slug },
@@ -11,6 +13,7 @@ export function getStaticPaths() {
   }));
 }
 const { location } = Astro.props;
+const landmark = landmarks[location.slug];
 ---
 
 <Layout
@@ -24,18 +27,49 @@ const { location } = Astro.props;
   ]}
 >
   <div class="wrap">
-    <section class="page-hero">
-      <p class="eyebrow">
-        {location.confirmed ? 'SERVICE AREA' : 'PROPOSED SERVICE AREA'} ·
-        LANCASTER COUNTY
-      </p>
-      <h1>
-        Making room
-        <br />
-        in {location.name}.
-      </h1>
-      <p>{location.tip}</p>
-      <CTA />
+    <section class="page-hero location-hero">
+      <div class="location-hero-copy">
+        <p class="eyebrow">
+          {location.confirmed ? 'SERVICE AREA' : 'PROPOSED SERVICE AREA'} ·
+          LANCASTER COUNTY
+        </p>
+        <h1>
+          Making room
+          <br />
+          in {location.name}.
+        </h1>
+        <p>{location.tip}</p>
+        <CTA />
+      </div>
+      <figure class="location-landmark">
+        <Image
+          src={landmark.image}
+          alt={landmark.alt}
+          widths={[480, 800, 1200, 1600]}
+          sizes="(max-width: 800px) calc(100vw - 40px), (max-width: 1240px) 46vw, 560px"
+          format="webp"
+          quality={80}
+          loading="eager"
+          fetchpriority="high"
+          style={`object-position: ${landmark.position}`}
+        />
+        <figcaption>
+          <span class="landmark-name">{landmark.name}</span>
+          <details class="landmark-credit">
+            <summary>Photo credit</summary>
+            <p>
+              <a href={landmark.source}>
+                {landmark.author} / Wikimedia Commons
+              </a>
+              {' · '}
+              <a href={landmark.licenseUrl} rel="license">
+                {landmark.license}
+              </a>
+              . Resized and cropped for display; image retains this license.
+            </p>
+          </details>
+        </figcaption>
+      </figure>
     </section>
     <section class="content-grid page-content">
       <div>
@@ -91,3 +125,77 @@ const { location } = Astro.props;
     </section>
   </div>
 </Layout>
+
+<style>
+  .location-hero {
+    max-width: none;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(24px, 4vw, 64px);
+  }
+  .location-hero-copy {
+    min-width: 0;
+  }
+  .location-hero h1 {
+    font-size: clamp(2.8rem, 5.4vw, 4.8rem);
+  }
+  .location-hero-copy > p:not(.eyebrow) {
+    font-size: 1.1rem;
+    max-width: 38rem;
+  }
+  .location-landmark {
+    margin: 0;
+    min-width: 0;
+  }
+  .location-landmark img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 8px;
+    background: #eee;
+  }
+  figcaption {
+    border-top: 3px solid var(--orange);
+    margin-top: 14px;
+    padding-top: 12px;
+  }
+  .landmark-name {
+    display: block;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+  .landmark-credit {
+    margin-top: 4px;
+    color: #626262;
+    font-size: 0.75rem;
+  }
+  .landmark-credit summary {
+    cursor: pointer;
+    width: fit-content;
+    padding: 4px 0;
+  }
+  .landmark-credit p {
+    margin: 6px 0 0;
+    font-size: inherit;
+    line-height: 1.6;
+  }
+  .landmark-credit a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  @media (max-width: 800px) {
+    .location-hero {
+      grid-template-columns: 1fr;
+      gap: 28px;
+    }
+    .location-hero h1 {
+      font-size: clamp(2.8rem, 9vw, 4.8rem);
+    }
+    .location-landmark img {
+      aspect-ratio: 3 / 2;
+    }
+  }
+</style>
