@@ -55,6 +55,7 @@ test('ZIP hero opens guided flow; answers survive back/edit; no false delivery',
   await page.getByLabel('Property type').selectOption('home');
   await page.getByRole('button', { name: 'Continue' }).click();
   await page.getByLabel('Your name').fill('Test Customer');
+  await page.getByLabel('Street address').fill('123 Test Street');
   await page.getByLabel('Email', { exact: true }).fill('test@example.com');
   await page.getByRole('button', { name: 'Continue' }).click();
   await expect(page.locator('#review-summary')).toContainText('17601');

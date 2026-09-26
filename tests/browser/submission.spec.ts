@@ -24,21 +24,21 @@ test('guided request validates contact, previews photos, retries errors and deli
   await page
     .getByLabel('A quick description')
     .fill('A couch and two chairs on the ground floor.');
-  await page
-    .locator('#photos')
-    .setInputFiles({
-      name: 'photo.png',
-      mimeType: 'image/png',
-      buffer: Buffer.from(
-        'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+a7n8AAAAASUVORK5CYII=',
-        'base64',
-      ),
-    });
+  await page.locator('#photos').setInputFiles({
+    name: 'photo.png',
+    mimeType: 'image/png',
+    buffer: Buffer.from(
+      'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+a7n8AAAAASUVORK5CYII=',
+      'base64',
+    ),
+  });
   await expect(page.locator('#photo-preview img')).toHaveCount(1);
   await page.getByRole('button', { name: 'Remove photo 1' }).click();
   await expect(page.locator('#photo-preview img')).toHaveCount(0);
   await page.getByRole('button', { name: 'Continue' }).click();
-  await page.getByRole('radio', { name: 'Within a week of launch', exact: true }).check();
+  await page
+    .getByRole('radio', { name: 'Within a week of launch', exact: true })
+    .check();
   await page.getByLabel('Where are the items').selectOption('ground');
   await page.getByLabel('Property type').selectOption('home');
   expect(
@@ -50,6 +50,7 @@ test('guided request validates contact, previews photos, retries errors and deli
   ).toEqual([]);
   await page.getByRole('button', { name: 'Continue' }).click();
   await page.getByLabel('Your name').fill('Test Customer');
+  await page.getByLabel('Street address').fill('123 Test Street');
   await page.getByRole('button', { name: 'Continue' }).click();
   await expect(page.locator('#step-counter')).toHaveText('STEP 4 OF 5');
   await page.getByLabel('Email', { exact: true }).fill('test@example.com');

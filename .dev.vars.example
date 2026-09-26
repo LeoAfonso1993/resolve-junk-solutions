@@ -1,0 +1,5 @@
+# Copy to .dev.vars for local Worker development only. Never commit .dev.vars.
+RESEND_API_KEY=
+LEAD_FROM_EMAIL=Resolve Junk Solutions <requests@your-verified-domain.com>
+LEAD_TO_EMAIL=your-inbox@example.com
+ALLOWED_ORIGINS=http://localhost:8787,http://127.0.0.1:8787

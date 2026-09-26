@@ -1,1 +1,4 @@
-{ "extends": "astro/tsconfigs/strict" }
+{
+  "extends": "astro/tsconfigs/strict",
+  "exclude": ["worker", "tests/email.test.ts", "dist", "node_modules"]
+}

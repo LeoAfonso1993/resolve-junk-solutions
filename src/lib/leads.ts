@@ -27,11 +27,21 @@ export async function submitLead(
     throw new Error(
       response.status === 429
         ? 'Too many requests. Please wait a few minutes before trying again.'
-        : 'Your request could not be confirmed. Please try again.',
+        : response.status === 422
+          ? 'A photo could not be processed. Try another photo or remove photos and send again.'
+          : response.status === 413
+            ? 'Your photos are too large. Please choose smaller files and try again.'
+            : response.status === 409
+              ? 'An earlier version of this request may already have been received. Please keep the original details when retrying.'
+              : 'Your request could not be confirmed. Please try again.',
     );
-  const result = await response.json();
+  const result: unknown = await response.json();
   // A 200 HTML page or empty mock response must never count as lead delivery.
   if (
+    !result ||
+    typeof result !== 'object' ||
+    !('accepted' in result) ||
+    !('id' in result) ||
     result.accepted !== true ||
     typeof result.id !== 'string' ||
     !result.id.trim()

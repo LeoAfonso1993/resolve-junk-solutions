@@ -11,7 +11,9 @@ npm ci
 npm run dev
 ```
 
-Astro prints the local address. Build with `npm run build`; deploy the `dist/` directory to a static host that serves directory index files and `404.html`. Configure HTTPS, the canonical apex domain, and www → apex redirects in the host. No deployment has been performed.
+For request email delivery through Cloudflare Workers and Resend, follow [RESEND-SETUP.md](RESEND-SETUP.md). Use `npm run build:worker` and deploy the Worker config; a static-only upload cannot deliver email.
+
+`npm run dev` builds the connected site and runs Cloudflare locally at http://localhost:8787 using `.dev.vars`. Restart after frontend or secret changes. Use `npm run dev:frontend` for the frontend-only Astro preview. Build with `npm run build`; deploy the `dist/` directory to a static host that serves directory index files and `404.html`. Configure HTTPS, the canonical apex domain, and www → apex redirects in the host. No deployment has been performed.
 
 ```sh
 npm test               # lead adapter and photo validation

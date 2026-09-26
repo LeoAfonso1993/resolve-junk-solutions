@@ -27,9 +27,18 @@ const connected = Boolean(import.meta.env.PUBLIC_LEAD_ENDPOINT);
       <p>
         The form asks for a name, service ZIP, a description, and a way to
         respond. It also asks about timing, approximate quantity, access, and
-        property type. A street address, notes, and photos are optional. A
-        project inquiry is not a subscription to marketing messages.
+        property type. A street address is required; notes and photos are
+        optional. A project inquiry is not a subscription to marketing messages.
       </p>
+      {connected && (
+        <p>
+          Cloudflare processes form submissions and prepares attached photos.
+          Resend delivers inquiry emails to our business inbox. Your contact
+          details, project information, and any attached photos are included in
+          that email so we can respond. Photos are not published in a public
+          gallery.
+        </p>
+      )}
       <h2>Photos</h2>
       <p>
         Only include images needed to explain the job. Avoid personal documents,

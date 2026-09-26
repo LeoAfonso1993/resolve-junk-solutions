@@ -235,12 +235,13 @@ const endpoint = import.meta.env.PUBLIC_LEAD_ENDPOINT || '';
       </div>
       <div class="field">
         <label for="address">
-          Street address <small>(optional for now)</small>
+          Street address <small>(required)</small>
         </label>
         <input
           id="address"
           name="address"
           autocomplete="street-address"
+          required
           maxlength="250"
         />
       </div>
