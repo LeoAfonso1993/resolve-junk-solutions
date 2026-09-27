@@ -18,7 +18,7 @@ const landmark = landmarks[location.slug];
 
 <Layout
   title={`${PRE_LAUNCH_MODE || !location.confirmed ? 'Junk Removal Planning' : 'Junk Removal'} in ${location.name}, PA`}
-  description={`Plan a ${location.name}, PA junk removal request with Resolve Junk Solutions. ${location.focus}. Coverage and scheduling require confirmation.`}
+  description={`Plan a ${location.name}, PA junk removal request with Resolve Junk Solutions. ${location.focus}. Share your project details and plan your pickup.`}
   noindex={!isIndexableLocation(location)}
   crumbs={[
     { name: 'Home', url: '/' },
@@ -29,10 +29,7 @@ const landmark = landmarks[location.slug];
   <div class="wrap">
     <section class="page-hero location-hero">
       <div class="location-hero-copy">
-        <p class="eyebrow">
-          {location.confirmed ? 'SERVICE AREA' : 'PROPOSED SERVICE AREA'} ·
-          LANCASTER COUNTY
-        </p>
+        <p class="eyebrow">SERVICE AREA · LANCASTER COUNTY</p>
         <h1>
           Making room
           <br />
@@ -74,13 +71,13 @@ const landmark = landmarks[location.slug];
     <section class="content-grid page-content">
       <div>
         <h2>
-          {PRE_LAUNCH_MODE ? 'Planning service for' : 'Service coverage for'}{' '}
+          {PRE_LAUNCH_MODE ? 'Launching in' : 'Service coverage for'}{' '}
           {location.name}
         </h2>
         <p>
-          {location.confirmed
-            ? `${location.name} is in our ${PRE_LAUNCH_MODE ? 'planned ' : ''}service area. Tell us about your project so we can review item acceptance and scheduling.`
-            : `${location.name} is part of our proposed Lancaster County coverage. We are still confirming our service area, so please include the ZIP for the actual property before making pickup plans.`}
+          {PRE_LAUNCH_MODE
+            ? `We’re bringing junk removal and cleanouts to ${location.name} in November 2026 as part of our Lancaster County launch. Tell us about your property and what needs to go.`
+            : `Plan your ${location.name} cleanout with us. Include your property’s ZIP and project details so we can review the pickup.`}
         </p>
         <p>
           Requests can describe a home, rental property, or a property you are
@@ -114,7 +111,7 @@ const landmark = landmarks[location.slug];
       <ServiceGrid slugs={location.serviceSlugs} />
     </section>
     <section class="page-content">
-      <h2>Other communities in our plans</h2>
+      <h2>Explore nearby communities</h2>
       <div class="city-list">
         {locations
           .filter((l) => location.nearby.includes(l.slug))

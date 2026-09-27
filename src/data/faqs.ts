@@ -14,7 +14,7 @@ export const faqs = [
     q: 'Can you take furniture and appliances?',
     a:
       (PRE_LAUNCH_MODE
-        ? 'Furniture and appliance removal are part of our planned services.'
+        ? 'We’ll offer furniture and appliance removal when we launch in November 2026.'
         : 'We offer furniture and appliance removal.') +
       '  List each item in your request; some appliances need special handling and individual acceptance confirmation.',
     needsConfirmation: true,
@@ -23,20 +23,20 @@ export const faqs = [
     q: 'Can you clean out a garage or basement?',
     a:
       (PRE_LAUNCH_MODE
-        ? 'Garage and basement cleanouts are part of our planned services.'
+        ? 'We’ll help clear garages and basements beginning November 2026.'
         : 'We offer garage and basement cleanouts.') +
       '  Photos of the contents and access route help us understand the scope. Set aside anything you want to keep.',
     needsConfirmation: true,
   },
   {
     q: 'What items can’t you take?',
-    a: 'Our final accepted-materials list is being confirmed. Flag paint, chemicals, fuel, batteries, refrigerant-containing appliances, and any unknown materials in your request. Do not assume they can be collected.',
+    a: 'Some materials need special handling. Flag paint, chemicals, fuel, batteries, refrigerant-containing appliances, and any unknown materials in your request. Do not assume they can be collected.',
     needsConfirmation: true,
   },
   {
     q: 'Do you offer same-day pickups?',
     a: PRE_LAUNCH_MODE
-      ? 'We are preparing to launch and are not booking pickups yet. You can share a future project; a request does not reserve a date.'
+      ? 'Service launches in November 2026, so same-day pickups are not available yet. Plan your project now; we’ll arrange a pickup date separately.'
       : 'Availability must be confirmed for each request. Tell us your preferred date; a submitted request does not reserve a pickup.',
     needsConfirmation: true,
   },
@@ -44,7 +44,7 @@ export const faqs = [
     q: 'Do you serve my area?',
     a:
       (PRE_LAUNCH_MODE
-        ? 'Our planned service area is Lancaster County, Pennsylvania.'
+        ? 'We’re launching in Lancaster County, Pennsylvania, in November 2026.'
         : 'Our service area is Lancaster County, Pennsylvania.') +
       '  Include the service ZIP in your request so we can confirm coverage for your address.',
     needsConfirmation: true,

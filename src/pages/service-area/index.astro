@@ -8,10 +8,10 @@ import FinalCTA from '../../components/FinalCTA.astro';
 <Layout
   title={
     PRE_LAUNCH_MODE
-      ? 'Planned Lancaster County Service Area'
+      ? 'Lancaster County Service Area · November 2026 Launch'
       : 'Lancaster County Service Area'
   }
-  description={`Explore Resolve Junk Solutions’ ${PRE_LAUNCH_MODE ? 'planned ' : ''}Lancaster County coverage. Check individual community status and request confirmation for your property.`}
+  description="Explore Resolve Junk Solutions’ Lancaster County service area and find information for your community. Start planning your pickup."
   crumbs={[
     { name: 'Home', url: '/' },
     { name: 'Service area', url: '/service-area' },
@@ -27,16 +27,12 @@ import FinalCTA from '../../components/FinalCTA.astro';
       </h1>
       <p>
         {PRE_LAUNCH_MODE
-          ? 'We’re planning junk removal and cleanouts for homes and properties across Lancaster County, Pennsylvania.'
+          ? 'Junk removal and cleanouts for Lancaster County, Pennsylvania, beginning November 2026.'
           : 'Junk removal and cleanouts for homes and properties in Lancaster County, Pennsylvania.'}
       </p>
       <div class="notice">
-        The directory shows{' '}
-        {locations.some((l) => !l.confirmed)
-          ? 'coverage status for each proposed community'
-          : 'our confirmed service communities'}
-        . These are not separate business locations. Include your service ZIP so
-        we can confirm your address.
+        Find your community below, then include your property’s ZIP when you
+        plan your pickup.
       </div>
     </section>
     <section
@@ -46,16 +42,10 @@ import FinalCTA from '../../components/FinalCTA.astro';
       {locations.map((l) => (
         <article>
           <h2>{l.name}, PA</h2>
-          <p class="coverage-status">
-            {l.confirmed
-              ? PRE_LAUNCH_MODE
-                ? 'Planned coverage confirmed'
-                : 'Service area'
-              : 'Proposed coverage · Not yet confirmed'}
-          </p>
+          <p class="coverage-status">Lancaster County</p>
           <p>{l.tip}</p>
           <a class="text-link" href={`/service-area/${l.slug}`}>
-            Plan a {l.name} request ↗
+            Explore junk removal in {l.name} ↗
           </a>
         </article>
       ))}

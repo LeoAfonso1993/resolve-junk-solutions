@@ -2,7 +2,7 @@
 
 User-supplied original SVG is preserved in `public/brand/logo-original.svg`. `scripts/brand-assets.mjs` derives light/dark color versions and horizontal lockups from its existing paths. Orange is #FF6200, with near-black and white. The source is a traced vector; its original contours have been preserved. Original source files outside the project were not changed.
 
-Concept images were created with the built-in imagegen tool, not the API/CLI. They are labeled on the website and do not represent real equipment, customer work, or staff. No invented phone number remains on the truck concept. Replace them with original business photos before representing actual jobs or fleet.
+Concept images were created with the built-in imagegen tool, not the API/CLI. Public disclosure captions were removed at the owner’s request during the pre-launch content pass. The assets do not represent real equipment, customer work, or staff. No invented phone number remains on the truck concept. Replace them with original business photos before representing actual jobs or fleet.
 
 - `src/assets/truck-concept.png`: edited from the owner's supplied AI truck reference. Used in hero and truck photography slots.
 - `src/assets/garage-concept.png`: new illustrative garage image. Used for service illustration and temporary photography slots.

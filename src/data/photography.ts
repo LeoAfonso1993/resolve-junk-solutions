@@ -1,6 +1,6 @@
 import type { ImageMetadata } from 'astro';
 // Import original photos from src/assets/ here, then set src + a factual alt.
-// Never remove a concept label without replacing the corresponding image.
+// Keep alt text descriptive of the scene when adding original photographs.
 interface OriginalPhoto {
   src?: ImageMetadata;
   alt: string;

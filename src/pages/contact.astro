@@ -1,15 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import LeadForm from '../components/LeadForm.astro';
-import { PRE_LAUNCH_MODE, requestExpectation } from '../data/business';
+import {
+  PRE_LAUNCH_MODE,
+  requestExpectation,
+  business,
+} from '../data/business';
 ---
 
 <Layout
-  title={
-    PRE_LAUNCH_MODE
-      ? 'Plan Your Junk Removal Quote'
-      : 'Get a Free Junk Removal Quote'
-  }
+  title={PRE_LAUNCH_MODE ? 'Plan Your Pickup' : 'Get a Free Junk Removal Quote'}
   description="Start with your ZIP, choose what needs to go, and tell us your timing. A simple step-by-step junk removal inquiry for Lancaster County."
 >
   <div class="quote-layout wrap">
@@ -44,6 +44,12 @@ import { PRE_LAUNCH_MODE, requestExpectation } from '../data/business';
         <strong>Local to Lancaster County.</strong>
         <p>{requestExpectation}</p>
       </div>
+      {business.email && (
+        <p>
+          For other questions, email{' '}
+          <a href={`mailto:${business.email}`}>{business.email}</a>.
+        </p>
+      )}
     </aside>
     <LeadForm />
   </div>

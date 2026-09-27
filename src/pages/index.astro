@@ -18,7 +18,7 @@ import { PRE_LAUNCH_MODE, business, launchStatus } from '../data/business';
   title="Junk Removal in Lancaster County, PA"
   description={
     PRE_LAUNCH_MODE
-      ? 'Resolve Junk Solutions is bringing local junk removal to Lancaster County. Start with your ZIP and plan furniture removal, cleanouts, or a future pickup.'
+      ? 'Resolve Junk Solutions is bringing local junk removal to Lancaster County. Start with your ZIP and plan furniture removal, cleanouts, with service launching in November 2026.'
       : 'Local junk removal in Lancaster County, PA. Tell us your ZIP, what needs to go, and your preferred timing. Get a free quote from Resolve Junk Solutions.'
   }
 >
@@ -29,7 +29,7 @@ import { PRE_LAUNCH_MODE, business, launchStatus } from '../data/business';
         alt={
           photography.hero.src
             ? photography.hero.alt
-            : 'AI concept of a Resolve-branded truck and trailer; original company photography coming soon.'
+            : 'Resolve-branded pickup truck and trailer outside a home.'
         }
         widths={[800, 1200, 1680]}
         sizes="100vw"
@@ -62,11 +62,6 @@ import { PRE_LAUNCH_MODE, business, launchStatus } from '../data/business';
         </div>
       </div>
     </div>
-    {!photography.hero.src && (
-      <span class="concept-label">
-        AI truck concept · Original photography coming soon
-      </span>
-    )}
   </section>
   <div class="launch-ribbon">
     <div class="wrap">
@@ -106,15 +101,12 @@ import { PRE_LAUNCH_MODE, business, launchStatus } from '../data/business';
           alt={
             photography.service.src
               ? photography.service.alt
-              : 'Illustrative AI concept of furniture and boxes at an open garage.'
+              : 'Furniture and boxes beside an open garage.'
           }
           widths={[500, 850]}
           sizes="(max-width:760px) 100vw, 42vw"
           format="webp"
         />
-        {!photography.service.src && (
-          <span class="feature-photo-label">Illustrative AI concept</span>
-        )}
         <div>
           <span>MAKE ROOM FOR WHAT’S NEXT</span>
           <h3>Get your garage back.</h3>
@@ -147,7 +139,7 @@ import { PRE_LAUNCH_MODE, business, launchStatus } from '../data/business';
     <div class="service-bottom">
       <p>
         {PRE_LAUNCH_MODE
-          ? 'Planned services. Materials and availability confirmed before scheduling.'
+          ? 'Furniture, cleanouts, and more—launching in November 2026.'
           : 'Materials and availability confirmed before scheduling.'}
       </p>
       <a href="/services" class="text-link">
@@ -231,8 +223,8 @@ import { PRE_LAUNCH_MODE, business, launchStatus } from '../data/business';
         Neither is treating your home with respect.
       </p>
       <p>
-        Resolve is locally owned and operated by {business.owner.name}, who{' '}
-        {business.owner.service}. For Leo, the standard is personal: be
+        Resolve was founded by {business.owner.name}, a Lancaster County local
+        and military service member. For Leo, the standard is personal: be
         prepared, communicate clearly, and follow through on the work you agreed
         on.
       </p>

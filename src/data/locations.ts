@@ -20,7 +20,7 @@ export const locations = [
   [
     'lititz-pa',
     'Lititz',
-    'Planning to clear space before a furniture delivery in Lititz? Include the delivery date, but wait for pickup confirmation before relying on a time slot.',
+    'Planning to clear space before a furniture delivery in Lititz? Include the delivery date, so we can help coordinate the removal.',
     'Furniture and appliance removal',
     ['furniture-removal', 'appliance-removal'],
     ['manheim-pa', 'ephrata-pa'],
@@ -28,7 +28,7 @@ export const locations = [
   [
     'manheim-pa',
     'Manheim',
-    'For a cleanout in the Manheim area, a room-by-room list helps distinguish a few items from a larger project. Include the full service ZIP so coverage can be checked.',
+    'For a cleanout in the Manheim area, a room-by-room list helps distinguish a few items from a larger project. Include the full service ZIP and any access details.',
     'Garage and basement projects',
     ['garage-cleanouts', 'basement-cleanouts'],
     ['lititz-pa', 'mount-joy-pa'],
@@ -36,7 +36,7 @@ export const locations = [
   [
     'mount-joy-pa',
     'Mount Joy',
-    'Moving in or around Mount Joy? Tell us what remains to be removed and when access to the property ends. Requested dates still need confirmation.',
+    'Moving in or around Mount Joy? Tell us what remains to be removed and when access to the property ends. Include any key-return or handover deadline.',
     'Move-related removal',
     ['moving-cleanouts', 'furniture-removal'],
     ['elizabethtown-pa', 'columbia-pa'],

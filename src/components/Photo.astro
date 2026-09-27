@@ -22,21 +22,12 @@ const alt = suppliedAlt ?? original.alt;
       src
         ? alt
         : kind === 'truck'
-          ? 'AI concept of a Resolve-branded pickup and trailer outside a home.'
-          : 'Illustrative AI concept of household items ready for a garage cleanout.'
+          ? 'Resolve-branded pickup and trailer outside a home.'
+          : 'Household items beside an open garage.'
     }
     widths={[480, 800, 1200]}
     sizes="(max-width: 760px) 100vw, 50vw"
     format="webp"
     loading="lazy"
   />
-  {!src && (
-    <figcaption>
-      {src
-        ? ''
-        : kind === 'truck'
-          ? 'Truck concept · Original owner photo coming soon'
-          : 'Illustrative concept · Original family photo coming soon'}
-    </figcaption>
-  )}
 </figure>

@@ -7,7 +7,7 @@ import FinalCTA from '../components/FinalCTA.astro';
 
 <Layout
   title="About Our Locally Owned Company"
-  description="Meet Leo Afonso, owner of Resolve Junk Solutions in Lancaster County and a currently serving Pennsylvania Air National Guard member."
+  description="Meet Leo Afonso, founder of Resolve Junk Solutions, Lancaster County local, and military service member."
   crumbs={[
     { name: 'Home', url: '/' },
     { name: 'About', url: '/about' },
@@ -34,9 +34,11 @@ import FinalCTA from '../components/FinalCTA.astro';
           <br />A personal approach.
         </h2>
         <p>
-          Resolve is locally owned and operated by {business.owner.name}, who{' '}
-          {business.owner.service}. He’s building the company around clear
-          communication, preparation, and personal responsibility for the work.
+          Resolve Junk Solutions was founded by {business.owner.name}, a
+          Lancaster County local and military service member. Leo{' '}
+          {business.owner.service}. He brings an emphasis on clear
+          communication, preparation, and personal responsibility to the
+          company.
         </p>
         <p>
           Leo’s technology and software background helps with the practical
@@ -47,7 +49,7 @@ import FinalCTA from '../components/FinalCTA.astro';
         </p>
         <p>
           {PRE_LAUNCH_MODE
-            ? `${launchStatus} Lancaster County is the center of our planned service area.`
+            ? `${launchStatus} We’re preparing to help Lancaster County households make room for what’s next.`
             : 'Resolve provides junk removal and cleanouts in Lancaster County, with coverage confirmed for each property.'}
         </p>
       </div>
@@ -64,11 +66,6 @@ import FinalCTA from '../components/FinalCTA.astro';
           Sometimes it’s a couch. Sometimes it’s a whole room. Either way, the
           goal is the same: make the process clear, treat people well, and
           follow through on the agreed work.
-        </p>
-        <p>
-          {PRE_LAUNCH_MODE
-            ? 'We’re preparing for launch. As the company gets moving, this space will feature our own truck, family, and real work.'
-            : 'As the company grows, this space will feature our own truck, family, and real work.'}
         </p>
       </div>
       <Photo kind="family" />

@@ -27,7 +27,7 @@
 - [ ] `hero`: actual truck/equipment photography; preserve readable hero cropping at mobile/desktop widths.
 - [ ] `service`: real service imagery with permission; replace the illustrative garage image.
 - [ ] Add actual job and paired before/after photography only when available. Do not present the existing AI concepts as completed work.
-- [ ] Concept labels disappear only when the associated original image is supplied. Review crops, alt text and image dimensions after replacement.
+- [ ] Public image disclosure captions have been removed at the owner’s request. Review crops, alt text and image dimensions when original photography replaces these assets.
 
 ## Post-launch SEO and measurement
 

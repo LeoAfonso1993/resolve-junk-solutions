@@ -11,7 +11,7 @@ export const business = {
   },
   expectedLaunch: 'November 2026',
   phone: '',
-  email: '',
+  email: '', // Public domain-based inbox only; independent of private Resend delivery settings.
   launchDate: '',
   hours: '',
   socialProfiles: [] as string[],
@@ -20,12 +20,12 @@ export const business = {
 export const quoteLabel = PRE_LAUNCH_MODE
   ? 'Plan Your Pickup'
   : 'Get a Free Quote';
-export const launchStatus = `Aiming to launch in ${business.expectedLaunch}.`;
+export const launchStatus = `Launching in ${business.expectedLaunch}.`;
 export const announcement = PRE_LAUNCH_MODE
   ? `${launchStatus} Locally owned in Lancaster County.`
   : 'Locally owned. Proudly serving Lancaster County.';
 export const requestExpectation = PRE_LAUNCH_MODE
-  ? `${launchStatus} Requests are for future service; pickup dates are not confirmed yet.`
+  ? `${launchStatus} Tell us about your project now. Pickup dates will be arranged separately.`
   : 'Your request starts an estimate. A pickup date is confirmed separately.';
 export const futureFeatures = {
   reviews: [],
