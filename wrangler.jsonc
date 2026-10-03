@@ -18,8 +18,8 @@
     },
   ],
   "vars": {
-    "LEAD_FROM_EMAIL": "",
-    "LEAD_TO_EMAIL": "",
+    "LEAD_FROM_EMAIL": "Resolve Junk Solutions <info@resolvejunksolutions.com>",
+    "LEAD_TO_EMAIL": "hello@resolvejunksolutions.com",
     "ALLOWED_ORIGINS": "https://resolvejunksolutions.com,https://www.resolvejunksolutions.com,https://resolve-junk-solutions.devpro-leo.workers.dev",
   },
   "observability": { "enabled": true, "traces": { "enabled": true } },

@@ -18,7 +18,7 @@ Keep the existing Worker name `resolve-junk-solutions`. Check the Cloudflare acc
 - Cloudflare build command: `npm run build:worker` (sets the public endpoint to `/api/leads`).
 - Cloudflare deploy command: `npx wrangler deploy` (uses `wrangler.jsonc`, including the server; uploading only `dist` will not provide email delivery).
 - For plain `npm run build`, set `PUBLIC_LEAD_ENDPOINT=/api/leads` in the build environment to enable submission. Without an endpoint the existing preview stays disabled.
-- `PRE_LAUNCH_MODE=true` can remain enabled: future-service requests can still be emailed.
+- Production copy is the default. Set `PRE_LAUNCH_MODE=true` only for an intentional pre-launch build; requests are still delivered through the same Worker when configured.
 - The API fails closed with 503 if its key or either email address is missing. Never enable the frontend without completing receiver configuration.
 
 Check locally before releasing:

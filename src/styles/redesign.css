@@ -57,11 +57,10 @@ h3 {
 }
 .announcement {
   background: #151515;
-  padding: 10px 20px;
-  font-size: 0.7rem;
-}
-.announcement a {
-  color: #fff;
+  padding: 8px 16px;
+  font-size: 0.68rem;
+  line-height: 1.2;
+  letter-spacing: 0.025em;
 }
 .site-header {
   min-height: 100px;
@@ -1066,8 +1065,10 @@ h3 {
     height: 55px;
   }
   .announcement {
-    font-size: 0.6rem;
-    padding-block: 9px;
+    font-size: 0.62rem;
+    padding: 7px 10px;
+    gap: 8px;
+    line-height: 1.2;
   }
   .hero-inner {
     padding-block: 38px 198px;

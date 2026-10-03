@@ -26,7 +26,7 @@ export function graph(
               },
             }
           : {}),
-        ...(business.phone ? { telephone: business.phone } : {}),
+        ...(business.phone ? { telephone: business.phoneE164 } : {}),
         ...(business.email ? { email: business.email } : {}),
         ...(business.socialProfiles.length
           ? { sameAs: business.socialProfiles }

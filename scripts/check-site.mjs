@@ -64,7 +64,8 @@ assert(
   !/service-area\/[a-z]/.test(sitemap),
   'Unconfirmed cities excluded from sitemap',
 );
-assert.equal((sitemap.match(/<loc>/g) || []).length, 16);
+assert.equal((sitemap.match(/<loc>/g) || []).length, 18);
+assert(sitemap.includes('https://resolvejunksolutions.com/terms'));
 console.log(
   `PASS: ${files.length} HTML pages: unique metadata, one H1, valid JSON-LD, local links and assets; sitemap excludes provisional cities.`,
 );

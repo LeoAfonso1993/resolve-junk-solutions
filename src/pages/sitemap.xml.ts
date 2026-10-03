@@ -10,6 +10,8 @@ export function GET() {
     '/service-area',
     '/contact',
     '/privacy',
+    '/terms',
+    '/terms',
     ...services.map((s) => `/services/${s.slug}`),
     ...locations
       .filter(isIndexableLocation)

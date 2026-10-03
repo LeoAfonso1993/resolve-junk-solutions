@@ -1,22 +1,24 @@
 # Owner facts and launch checklist
 
-## Blocking a working lead-generation launch
+## Before public launch
 
-- [ ] Supply business phone and email (`src/data/business.ts`). Neither is fabricated.
-- [ ] Connect a real lead destination using `PUBLIC_LEAD_ENDPOINT`; see LEAD-INTEGRATION.md.
-- [ ] Verify a real request arrives, including uploaded photos, and test failure/retry paths.
-- [ ] Publish a monitored privacy contact and confirm vendor, retention, access and deletion practices; update `/privacy` to match actual practices before collecting data.
+- [x] Configure the public business phone and email in `src/data/business.ts`.
+- [x] Configure the production Worker build to use `/api/leads`, the existing Resend sender, and `hello@resolvejunksolutions.com` as its lead destination.
+- [ ] Confirm the Cloudflare production `RESEND_API_KEY` secret is present and the sender domain remains verified.
+- [ ] Confirm the business inbox is monitored. Send a real request with photos and test delivery, retry, and failure paths before public launch.
+- [ ] Confirm email-provider retention practices and update `/privacy` if actual handling differs from the published description.
 - [x] Run the redesigned local site, browser tests and visual review on mobile/desktop. Automated axe checks passed at 375, 768 and 1440 pixels.
-- [ ] Recheck the connected production flow and click-to-call with a real number. Local navigation/validation and adapter error handling are tested.
+- [ ] Recheck the production flow and click-to-call on a real device. `SHOW_PHONE_CTA` is false; the number remains available in contact/footer details.
 - [ ] Measure Lighthouse on production output and mobile performance; no score is claimed yet.
 - [ ] Choose hosting, configure HTTPS/domain redirects, cache static hashed assets, use the custom 404, and verify deployed canonical/sitemap URLs.
 
 ## Business confirmation
 
-- [ ] Exact launch date and business hours.
+- [ ] Business hours and scheduling availability.
 - [ ] Confirm each city and ZIP coverage. `locations.ts` currently marks all eleven candidate communities unconfirmed.
 - [ ] Add verified local operating/access details to each location before indexing; a different project tip is not enough to justify an SEO landing page.
-- [ ] Final pricing model, rates, truck capacity and quote terms. Load fractions are planning categories only.
+- [x] Publish the $125 single-item starting price and explain quote factors; larger-load dollar amounts remain unpublished.
+- [ ] Confirm operating scope, truck capacity, and quote terms as operations begin.
 - [ ] Accepted/restricted materials, appliance/refrigerant handling, hazardous materials, weight limits and scope exclusions.
 - [ ] Indoor removal/disconnection/disassembly policy and access requirements.
 - [ ] Same-day policy; do not advertise it until supported operationally.
@@ -34,11 +36,8 @@
 - [ ] Real job/before-and-after photos, with permission and accurate pairing.
 - [ ] Real reviews with source and permission; never add placeholder praise or ratings.
 
-## Switching to active service
+## Coverage and indexing
 
-- [ ] Finish policy review and confirm lead delivery.
-- [ ] Set `PRE_LAUNCH_MODE` to false and rebuild.
 - [ ] Set city `confirmed` only after coverage and useful local content are reviewed.
-- [ ] Review all pages for remaining provisional wording. Policy and unconfirmed-city language is deliberately not erased by the switch.
-- [ ] Update service descriptions if business scope changes; review privacy, metadata and schema.
+- [ ] Review service descriptions, policies, privacy, metadata, and schema as operations are confirmed.
 - [ ] Submit sitemap to Search Console and verify indexing. Establish a service-area Google Business Profile without exposing a residential address.

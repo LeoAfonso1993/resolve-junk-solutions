@@ -15,7 +15,7 @@ export async function submitLead(
 ): Promise<void> {
   if (!endpoint)
     throw new Error(
-      'Online requests are not open yet. Your information has not been sent. Please check back closer to launch.',
+      'Quote requests are unavailable in this build; your information has not been sent. Please use the contact details provided on this page.',
     );
   const response = await fetch(endpoint, {
     method: 'POST',

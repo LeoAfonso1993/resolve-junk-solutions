@@ -40,15 +40,15 @@ Browser tests use installed Google Chrome and a local server. The redesign has p
 
 ## Routes
 
-`/`, `/services`, `/pricing`, `/about`, `/service-area`, `/contact`, `/privacy`, custom 404, nine `/services/[slug]` pages, eleven provisional `/service-area/[slug]` pages. XML sitemap includes only indexable pages. No residential address or separate city offices are invented.
+`/`, `/services`, `/pricing`, `/about`, `/service-area`, `/contact`, `/privacy`, `/terms`, custom 404, nine `/services/[slug]` pages, eleven provisional `/service-area/[slug]` pages. XML sitemap includes only indexable pages. No residential address or separate city offices are invented.
 
 ## Pre-launch and live mode
 
-`PRE_LAUNCH_MODE = true` is the default. It selects future-service CTAs and scheduling expectations. Set it to `false` and rebuild for active-service CTAs and schema. Review all policy flags and the launch checklist before switching. Unconfirmed city pages remain provisional independently of live mode.
+Production copy is the default. Set `PRE_LAUNCH_MODE=true` only for an intentional pre-launch build; `npm run build:worker` defaults it to false and connects the same-origin lead endpoint. Unconfirmed city pages remain provisional independently of launch mode.
 
-Missing phone/email are omitted. Once a phone is supplied, click-to-call links appear in the footer, contact area, mobile bar and secondary CTA. Configure it with country code, e.g. the real `+1…` number. No sample number is published.
+The public phone and email are configured in `src/data/business.ts`. Contact and footer links use the configured number; `SHOW_PHONE_CTA=false` controls prominent mobile call actions and can be enabled centrally later.
 
-A missing lead endpoint renders a visible preview notice and disabled submit button. Nothing is delivered or saved. Launching a functioning lead-generation site requires connecting and testing a real destination; there is no fake-success or local-storage fallback.
+A missing lead endpoint renders an unavailable-build notice and disabled submit button. The production Worker build sets `/api/leads`, which validates submissions server-side and sends the internal request email through the existing Resend integration. Without that Worker and its runtime configuration, no submission is accepted.
 
 ## Photography and future features
 
@@ -62,7 +62,7 @@ Each page has a unique title/description, canonical, social metadata, one H1, se
 
 AI-search preparation uses clear business/service relationships and useful answers, not hidden crawler text or ranking promises. Candidate location content needs verified local service/access details before indexing, even after coverage is confirmed.
 
-`resolve:analytics` CustomEvents expose `quote_cta_click`, `phone_click`, `quote_form_start`, `quote_step_view`, `quote_form_submit` (confirmed receipt only), `photo_upload` (count only), `service_page_view`, and `location_page_view`. Attach a consent-aware analytics listener later. No submitted personal data is added to events. Configure Search Console outside the codebase.
+`resolve:analytics` CustomEvents expose quote, phone, email, form-start, form-step, successful-submission, photo-count, service-page, and location-page events without submitted personal data. A Cloudflare Web Analytics beacon is prepared but loads only when `PUBLIC_CF_WEB_ANALYTICS_TOKEN` is supplied at build time; it measures visits/performance, while a separate provider is needed to collect business interaction events. Configure Search Console outside the codebase.
 
 ## Guided quote redesign
 

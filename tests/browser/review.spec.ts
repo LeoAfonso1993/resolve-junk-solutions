@@ -10,6 +10,7 @@ const routes = [
   '/contact',
   '/service-area',
   '/privacy',
+  '/terms',
   ...services.map((s) => `/services/${s.slug}`),
   ...locations.map((l) => `/service-area/${l.slug}`),
 ];
@@ -75,16 +76,19 @@ test('validation errors persist, correct cleanly, and invalid photo selection ca
   await page.getByRole('button', { name: 'Continue' }).click();
   await expect(page.locator('#step-counter')).toHaveText('STEP 3 OF 5');
 });
-test('owner identity and launch intent stay factual', async ({ page }) => {
+test('business identity and production copy stay factual', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('.hero-reassurance')).toContainText(
     /Air National Guard member|Military Service Member/,
   );
   await expect(page.locator('.resolve-story')).toContainText('Leo Afonso');
-  await expect(page.locator('.announcement')).toContainText('November 2026');
+  await expect(page.locator('.announcement')).toHaveText(
+    'Serving Lancaster County • Launching November 2026',
+  );
   await expect(
     page.locator('#hero-zip').locator('..').getByRole('button'),
-  ).toHaveText('Plan Your Pickup →');
+  ).toHaveText('Get a Free Quote →');
+  await expect(page.locator('main')).toContainText('Single-item pickups start at $125');
   await page.goto('/about');
   await expect(page.locator('main')).toContainText(
     'currently serves in the Pennsylvania Air National Guard',

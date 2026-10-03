@@ -97,7 +97,7 @@ if (form) {
       step === 4
         ? form!.dataset.endpoint
           ? 'Send My Request →'
-          : 'Online Sending Opens Soon'
+          : 'Unavailable in This Build'
         : 'Continue →';
     next.disabled = step === 4 && !form!.dataset.endpoint;
     status.textContent = '';

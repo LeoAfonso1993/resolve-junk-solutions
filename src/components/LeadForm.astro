@@ -1,5 +1,10 @@
 ---
-import { PRE_LAUNCH_MODE, requestExpectation } from '../data/business';
+import {
+  PRE_LAUNCH_MODE,
+  requestExpectation,
+  business,
+  SHOW_PHONE_CTA,
+} from '../data/business';
 import { intakeOptions } from '../data/intake';
 const endpoint = import.meta.env.PUBLIC_LEAD_ENDPOINT || '';
 ---
@@ -18,8 +23,11 @@ const endpoint = import.meta.env.PUBLIC_LEAD_ENDPOINT || '';
     <p id="step-error" class="field-error" role="alert"></p>
     {!endpoint && (
       <p class="preview-note">
-        Explore the quote process. Online sending opens soon; nothing is saved
-        or sent yet.
+        Online quote requests are unavailable in this build. Email{' '}
+        <a href={`mailto:${business.email}`} data-event="email_click">
+          {business.email}
+        </a>{' '}
+        and we’ll be glad to help.
       </p>
     )}
     <fieldset data-step="0">
@@ -146,7 +154,7 @@ const endpoint = import.meta.env.PUBLIC_LEAD_ENDPOINT || '';
       </fieldset>
       <p class="timing-note">
         {PRE_LAUNCH_MODE
-          ? 'Choose your preferred timing after our November 2026 launch.'
+          ? 'Choose your preferred timing. We’ll confirm availability when we review your request.'
           : 'Requested timing is subject to availability.'}
       </p>
       <div class="form-grid">
@@ -264,14 +272,25 @@ const endpoint = import.meta.env.PUBLIC_LEAD_ENDPOINT || '';
         <span aria-hidden="true">✓</span>
         <p>
           {PRE_LAUNCH_MODE
-            ? 'We’ll review your project and follow up to plan a pickup after our November 2026 launch.'
+            ? 'We’ll review your project and follow up to discuss an estimate and possible pickup timing.'
             : 'We’ll review your request and contact you to discuss the estimate. This does not book a pickup.'}
         </p>
       </div>
       {!endpoint && (
         <p class="notice">
-          The quote experience is ready to explore. Sending will be available
-          when online requests open. Your details have not been saved or sent.
+          This build cannot send quote requests. Your information will not be
+          submitted. Please email{' '}
+          <a href={`mailto:${business.email}`} data-event="email_click">
+            {business.email}
+          </a>
+          {SHOW_PHONE_CTA && business.phone && (
+            <>
+              {' '}or call{' '}
+              <a href={`tel:${business.phoneE164}`} data-event="phone_click">
+                {business.phone}
+              </a>
+            </>
+          )}.
         </p>
       )}
       <p class="consent">
@@ -319,8 +338,23 @@ const endpoint = import.meta.env.PUBLIC_LEAD_ENDPOINT || '';
       OUR RADAR.
     </h2>
     <p>
-      Your request was received. We’ll use the contact details you provided to
-      talk through the project. A pickup has not been booked.
+      Thanks! We received your request and will get back to you as soon as
+      possible. This request is not a confirmed appointment; we’ll confirm
+      scheduling separately, and final pricing is confirmed before loading.
+    </p>
+    <p>
+      Questions? Email{' '}
+      <a href={`mailto:${business.email}`} data-event="email_click">
+        {business.email}
+      </a>
+      {SHOW_PHONE_CTA && business.phone && (
+        <>
+          {' '}or call{' '}
+          <a href={`tel:${business.phoneE164}`} data-event="phone_click">
+            {business.phone}
+          </a>
+        </>
+      )}.
     </p>
     <a href="/" class="text-link">
       Back to home →

@@ -49,7 +49,7 @@ test('ZIP hero opens guided flow; answers survive back/edit; no false delivery',
     .fill('A sofa and two chairs from the living room.');
   await page.getByRole('button', { name: 'Continue' }).click();
   await page
-    .getByRole('radio', { name: 'Within a month of launch', exact: true })
+    .getByRole('radio', { name: 'Within a month', exact: true })
     .check();
   await page.getByLabel('Where are the items').selectOption('stairs');
   await page.getByLabel('Property type').selectOption('home');
@@ -72,7 +72,7 @@ test('ZIP hero opens guided flow; answers survive back/edit; no false delivery',
   for (let i = 0; i < 3; i++)
     await page.getByRole('button', { name: 'Continue' }).click();
   await expect(
-    page.getByRole('button', { name: 'Online Sending Opens Soon' }),
+    page.getByRole('button', { name: 'Unavailable in This Build' }),
   ).toBeDisabled();
   expect(
     (

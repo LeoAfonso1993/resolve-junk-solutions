@@ -46,10 +46,25 @@ import {
       </div>
       {business.email && (
         <p>
-          For other questions, email{' '}
-          <a href={`mailto:${business.email}`}>{business.email}</a>.
+          Questions? Email{' '}
+          <a href={`mailto:${business.email}`} data-event="email_click">
+            {business.email}
+          </a>
+          {business.phone && (
+            <>
+              <br />
+              Phone:{' '}
+              <a href={`tel:${business.phoneE164}`} data-event="phone_click">
+                {business.phone}
+              </a>
+            </>
+          )}
         </p>
       )}
+      <p class="quote-disclaimer">
+        A quote request is not a confirmed appointment. We’ll confirm
+        availability and final pricing before any loading begins.
+      </p>
     </aside>
     <LeadForm />
   </div>

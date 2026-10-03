@@ -1,6 +1,7 @@
-// Default to pre-launch. Set PRE_LAUNCH_MODE=false in the build environment
-// only after completing POST-LAUNCH-CHECKLIST.md, then rebuild.
-export const PRE_LAUNCH_MODE = import.meta.env?.PRE_LAUNCH_MODE !== 'false';
+// Preview wording is opt-in. Production builds are operational by default.
+export const PRE_LAUNCH_MODE = import.meta.env?.PRE_LAUNCH_MODE === 'true';
+// Keep prominent call-now actions easy to enable without scattering the switch.
+export const SHOW_PHONE_CTA = false;
 export const business = {
   name: 'Resolve Junk Solutions',
   url: 'https://resolvejunksolutions.com',
@@ -9,10 +10,9 @@ export const business = {
     name: 'Leo Afonso',
     service: 'currently serves in the Pennsylvania Air National Guard',
   },
-  expectedLaunch: 'November 2026',
-  phone: '',
-  email: '', // Public domain-based inbox only; independent of private Resend delivery settings.
-  launchDate: '',
+  phone: '717-742-0722',
+  phoneE164: '+17177420722',
+  email: 'hello@resolvejunksolutions.com',
   hours: '',
   socialProfiles: [] as string[],
   googleBusinessProfile: '',
@@ -20,12 +20,10 @@ export const business = {
 export const quoteLabel = PRE_LAUNCH_MODE
   ? 'Plan Your Pickup'
   : 'Get a Free Quote';
-export const launchStatus = `Launching in ${business.expectedLaunch}.`;
-export const announcement = PRE_LAUNCH_MODE
-  ? `${launchStatus} Locally owned in Lancaster County.`
-  : 'Locally owned. Proudly serving Lancaster County.';
+export const launchStatus = 'Planning a pickup in Lancaster County.';
+export const announcement = 'Serving Lancaster County • Launching November 2026';
 export const requestExpectation = PRE_LAUNCH_MODE
-  ? `${launchStatus} Tell us about your project now. Pickup dates will be arranged separately.`
+  ? 'Tell us about your project. Pickup dates are arranged separately.'
   : 'Your request starts an estimate. A pickup date is confirmed separately.';
 export const futureFeatures = {
   reviews: [],

@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import { business } from '../data/business';
 const connected = Boolean(import.meta.env.PUBLIC_LEAD_ENDPOINT);
+const analyticsEnabled = Boolean(import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN);
 ---
 
 <Layout
@@ -22,7 +23,7 @@ const connected = Boolean(import.meta.env.PUBLIC_LEAD_ENDPOINT);
       <p>
         {connected
           ? 'The request form sends the details you enter and any photos you choose to attach to our inquiry service. We use them to review your project and respond to you.'
-          : 'Online requests are not open yet. The preview form does not send or save the information you enter.'}
+          : `This build cannot submit quote requests. You can contact us at ${business.email}.`}
       </p>
       <p>
         The form asks for a name, service ZIP, a description, and a way to
@@ -33,10 +34,12 @@ const connected = Boolean(import.meta.env.PUBLIC_LEAD_ENDPOINT);
       {connected && (
         <p>
           Cloudflare processes form submissions and prepares attached photos.
-          Resend delivers inquiry emails to our business inbox. Your contact
-          details, project information, and any attached photos are included in
-          that email so we can respond. Photos are not published in a public
-          gallery.
+          Resend delivers inquiry emails to the configured business inbox. Your
+          contact details, project information, and any attached photos are
+          included in that email so we can respond. This Worker does not keep a
+          separate inquiry database or publish photos. Email providers may
+          retain messages under their own policies; contact us if you need to
+          ask about a request.
         </p>
       )}
       <h2>Photos</h2>
@@ -47,10 +50,9 @@ const connected = Boolean(import.meta.env.PUBLIC_LEAD_ENDPOINT);
       </p>
       <h2>Website analytics</h2>
       <p>
-        This version does not install advertising trackers or third-party
-        analytics. It exposes local browser events for features such as quote
-        clicks; those events exclude names, contact details, and form content.
-        Hosting providers may process basic request logs to operate the website.
+        {analyticsEnabled
+          ? 'Cloudflare Web Analytics is enabled to measure site visits and performance. It does not receive quote form contents through this site. The website also emits limited local interaction events for quote, phone, email, and form steps; these are not sent to an analytics provider unless a separate integration is configured.'
+          : 'No analytics beacon is enabled in this build. The website emits limited local interaction events for quote, phone, email, and form steps; these are not sent to an analytics provider. Hosting providers may process basic request logs to operate the website.'}
       </p>
       <h2>Questions about your information</h2>
       {business.email ? (
@@ -60,8 +62,8 @@ const connected = Boolean(import.meta.env.PUBLIC_LEAD_ENDPOINT);
         </p>
       ) : (
         <p>
-          A business privacy contact will be published before online inquiries
-          open.
+          Email <a href={`mailto:${business.email}`}>{business.email}</a> with
+          questions about information you have shared.
         </p>
       )}
     </div>

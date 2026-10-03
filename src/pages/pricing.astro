@@ -7,7 +7,7 @@ import { loadSizes } from '../data/business';
 
 <Layout
   title="How Junk Removal Pricing Works"
-  description="Understand how volume, materials, access, and disposal requirements affect a junk removal estimate in Lancaster County. No invented prices or surprise assumptions."
+  description="Single-item pickup starts at $125 in Lancaster County. See what affects the final junk removal price and request a quote for larger loads."
   crumbs={[
     { name: 'Home', url: '/' },
     { name: 'Pricing', url: '/pricing' },
@@ -26,6 +26,16 @@ import { loadSizes } from '../data/business';
       </p>
       <CTA />
     </section>
+    <section class="callout pricing-starting-price" aria-labelledby="starting-price">
+      <p class="eyebrow">A PLACE TO START</p>
+      <h2 id="starting-price">Single-Item Pickup — Starting at $125</h2>
+      <p>
+        Have one bulky item you need gone? Single-item pickups start at $125,
+        including loading, hauling, and standard disposal. This is a starting
+        price, not a promise that every item costs exactly $125. Final pricing
+        is confirmed with you before we load anything.
+      </p>
+    </section>
     <section class="content-grid page-content">
       <div>
         <h2>Four things shape the estimate.</h2>
@@ -34,12 +44,14 @@ import { loadSizes } from '../data/business';
             <strong>Volume.</strong> How much room the items take up in a load.
           </li>
           <li>
-            <strong>Materials.</strong> Heavy debris and special-handling items
-            can differ from ordinary household clutter.
+            <strong>Materials and weight.</strong> Heavy items, unusual
+            materials, and special handling can affect the work and disposal
+            requirements.
           </li>
           <li>
-            <strong>Labor and access.</strong> Stairs, distance to the truck,
-            tight doors, and disassembly affect the work.
+            <strong>Access and distance.</strong> Stairs, difficult access,
+            distance to the truck or service location, and disassembly can
+            affect the work.
           </li>
           <li>
             <strong>Disposal requirements.</strong> The type of material
@@ -53,10 +65,12 @@ import { loadSizes } from '../data/business';
           appliance connection. An on-site look may be needed to confirm the
           scope.
         </p>
-        <h2>Thinking in load sizes</h2>
+        <h2>For larger loads, request a quote.</h2>
         <p>
-          We’re considering load-based pricing. These are planning categories,
-          not published rates or guaranteed truck capacities.
+          Larger projects are priced from their actual scope. Amount or volume,
+          weight, stairs, difficult access, distance, special handling, disposal
+          requirements, and certain items with additional disposal fees can all
+          affect the estimate. Request a quote and include photos if helpful.
         </p>
         <div class="load-sizes">
           {loadSizes.map((s) => (
@@ -64,8 +78,9 @@ import { loadSizes } from '../data/business';
           ))}
         </div>
         <p>
-          Actual prices and the final pricing model will be added here once
-          confirmed. You’ll need an estimate for your specific job.
+          These amount choices help describe a project; they are not published
+          load rates or guaranteed truck capacities. Final pricing is confirmed
+          before loading begins.
         </p>
       </div>
       <aside class="callout">
@@ -74,7 +89,10 @@ import { loadSizes } from '../data/business';
           Include your item list, ZIP, photos if you have them, and any stairs
           or access limitations. Tell us your timing, too.
         </p>
-        <p>There’s no need to guess how much truck space you’ll need.</p>
+        <p>
+          There’s no need to guess how much truck space you’ll need. We’ll
+          discuss the estimate before loading anything.
+        </p>
         <CTA />
       </aside>
     </section>

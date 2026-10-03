@@ -12,6 +12,7 @@
     "test:browser": "playwright test",
     "test:launch": "node scripts/check-launch.mjs",
     "build:worker": "node scripts/build-worker.mjs",
+    "build:icons": "node scripts/site-icons.mjs",
     "dev:worker": "npm run dev",
     "types:worker": "wrangler types worker/worker-configuration.d.ts --strict-vars=false",
     "check:worker": "tsc -p worker/tsconfig.json && wrangler deploy --dry-run",

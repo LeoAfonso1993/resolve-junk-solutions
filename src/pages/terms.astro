@@ -1,0 +1,53 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { business } from '../data/business';
+---
+
+<Layout
+  title="Service Terms"
+  description="Plain-English terms for quote requests, scheduling, estimates, pricing, and item acceptance from Resolve Junk Solutions."
+  crumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Terms', url: '/terms' },
+  ]}
+>
+  <div class="wrap">
+    <section class="page-hero">
+      <p class="eyebrow">CLEAR EXPECTATIONS</p>
+      <h1>Service terms, plainly.</h1>
+      <p>How requests, estimates, scheduling, and item acceptance work.</p>
+    </section>
+    <div class="prose page-content">
+      <h2>Requests and appointments</h2>
+      <p>
+        A request submitted through this website is an inquiry for an estimate,
+        not a confirmed appointment or reserved pickup. We will contact you to
+        discuss the project. An appointment is confirmed separately.
+      </p>
+      <h2>Estimates and final pricing</h2>
+      <p>
+        We communicate and confirm final pricing with you before loading begins.
+        Pricing may change if the actual amount or volume, weight, access,
+        distance, materials, disposal requirements, or job scope differs from
+        the information initially provided. We will discuss any revised price
+        with you before proceeding.
+      </p>
+      <h2>Items and project details</h2>
+      <p>
+        Please describe the items and conditions accurately, including unusual,
+        hazardous, or restricted materials. We may decline items that cannot be
+        safely or legally transported or disposed of. Some items may require
+        special handling or additional disposal fees. If you are unsure about
+        an item, email a photo and description before scheduling.
+      </p>
+      <h2>Questions</h2>
+      <p>
+        Contact Resolve Junk Solutions at{' '}
+        <a href={`mailto:${business.email}`} data-event="email_click">
+          {business.email}
+        </a>{' '}
+        or <a href={`tel:${business.phoneE164}`} data-event="phone_click">{business.phone}</a>.
+      </p>
+    </div>
+  </div>
+</Layout>

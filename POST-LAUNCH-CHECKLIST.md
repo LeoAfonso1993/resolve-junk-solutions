@@ -2,9 +2,9 @@
 
 ## Before accepting inquiries
 
-- [ ] Confirm business phone/email and monitored privacy contact in `src/data/business.ts`.
-- [ ] Confirm the November 2026 launch window; do not invent a specific day.
-- [ ] Connect `PUBLIC_LEAD_ENDPOINT`, revalidate on the server, persist requests/photos, and test actual delivery. The current disconnected form is explicitly a planner preview.
+- [x] Public business phone/email and privacy contact are configured in `src/data/business.ts`.
+- [x] Production Worker build connects `PUBLIC_LEAD_ENDPOINT=/api/leads` and routes email to the public business inbox.
+- [ ] Confirm production `RESEND_API_KEY`, verified sending domain, and a real delivery test (including photos and retry/failure behavior).
 - [ ] Confirm accepted/restricted materials, handling, quote terms, payment methods, hours, and disposal/donation/recycling policies.
 - [ ] Review flagged FAQ answers and pricing methodology. Do not publish unconfirmed rates or same-day promises.
 - [ ] Deploy the reviewed static build. Check preview responses include `X-Robots-Tag: noindex`; production must not inherit that header. `public/_headers` applies to Cloudflare static asset responses. Custom Worker/SSR responses need equivalent headers in their handler.
@@ -12,10 +12,10 @@
 
 ## Launch day
 
-- [ ] Set build environment `PRE_LAUNCH_MODE=false`, rebuild, then deploy. This changes CTAs, launch messaging, timing choices, service metadata and schema.
+- [x] Production build defaults to `PRE_LAUNCH_MODE=false`; set it true only for an intentional pre-launch build.
 - [ ] Run `npm run build`, `npm test`, `npm run test:launch`, `npm run check:site`, and `npm run test:browser`.
 - [ ] Confirm coverage city by city. Set `confirmed` only for actual coverage; set `contentReady` separately after verified local content review. Both are required for sitemap/indexing eligibility.
-- [ ] Confirm business hours, phone links and email. Perform one real mobile inquiry and verify receipt in the actual destination.
+- [ ] Confirm business hours and contact links. Perform one real mobile inquiry and verify receipt in the intended business inbox.
 - [ ] Verify production canonical, Open Graph, schema and sitemap URLs use `https://resolvejunksolutions.com`.
 - [ ] Review remaining provisional material/pricing/coverage policies; changing launch mode does not invent missing facts.
 

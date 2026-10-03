@@ -1,5 +1,5 @@
 ---
-import { quoteLabel, business } from '../data/business';
+import { quoteLabel, business, SHOW_PHONE_CTA } from '../data/business';
 interface Props {
   label?: string;
   secondary?: boolean;
@@ -13,10 +13,10 @@ const { label = quoteLabel, secondary = false } = Astro.props;
     <span aria-hidden="true">↗</span>
   </a>
   {secondary &&
-    (business.phone ? (
+    (business.phone && SHOW_PHONE_CTA ? (
       <a
         class="text-link"
-        href={`tel:${business.phone.replace(/[^+\d]/g, '')}`}
+        href={`tel:${business.phoneE164}`}
         data-event="phone_click"
       >
         Call Us <span>{business.phone}</span>

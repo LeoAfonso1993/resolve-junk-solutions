@@ -12,7 +12,7 @@ const read = (p) => readFileSync(path.join(output, p), 'utf8');
 const home = read('index.html');
 assert(home.includes('Get a Free Quote'));
 assert(!home.includes('Plan Your Pickup'));
-assert(!home.includes('Aiming to launch in November 2026'));
+assert(home.includes('Serving Lancaster County • Launching November 2026'));
 assert(home.includes('"@type":"LocalBusiness"'));
 assert(home.includes('Leo Afonso'));
 const service = read('services/furniture-removal/index.html');
@@ -41,5 +41,5 @@ assert(
   'Preview protection survives launch',
 );
 console.log(
-  'PASS: isolated live-mode build; CTA, announcement, timing, metadata and schema switch; provisional areas remain noindex. Source and default build unchanged.',
+  'PASS: isolated live-mode build; CTA, launch announcement, timing, metadata and schema switch; provisional areas remain noindex. Source and default build unchanged.',
 );

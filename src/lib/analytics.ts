@@ -1,6 +1,8 @@
 export type AnalyticsEvent =
   | 'quote_cta_click'
   | 'phone_click'
+  | 'email_click'
+  | 'email_click'
   | 'quote_step_view'
   | 'quote_form_start'
   | 'quote_form_submit'
