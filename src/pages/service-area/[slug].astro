@@ -1,198 +1,678 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { locations, isIndexableLocation } from '../../data/locations';
-import ServiceGrid from '../../components/ServiceGrid.astro';
-import { PRE_LAUNCH_MODE } from '../../data/business';
-import CTA from '../../components/CTA.astro';
+import { business } from '../../data/business';
+import { services } from '../../data/services';
 import { Image } from 'astro:assets';
+import ZipStart from '../../components/ZipStart.astro';
+import Icon from '../../components/Icon.astro';
 import { landmarks } from '../../data/landmarks';
+
 export function getStaticPaths() {
   return locations.map((location) => ({
     params: { slug: location.slug },
     props: { location },
   }));
 }
+
 const { location } = Astro.props;
 const landmark = landmarks[location.slug];
+const localServices = location.popularServiceSlugs
+  .map((slug) => services.find((service) => service.slug === slug))
+  .filter((service) => service !== undefined);
+const serviceCategory: Record<string, string> = {
+  'furniture-removal': 'furniture',
+  'appliance-removal': 'appliances',
+  'junk-removal': 'household',
+  'garage-cleanouts': 'cleanout',
+  'basement-cleanouts': 'cleanout',
+  'estate-cleanouts': 'cleanout',
+  'moving-cleanouts': 'cleanout',
+  'yard-debris-removal': 'yard',
+  'construction-debris-removal': 'construction',
+};
+const title = `Junk removal in ${location.name}, PA`;
+const description = `Need junk removal in ${location.name}, PA? Request a local estimate for furniture, appliances, household clutter, and cleanouts. Single items from $125; price confirmed before loading.`;
+
+const faqs = [
+  {
+    q: `How much does junk removal cost in ${location.name}?`,
+    a: 'Single-item pickups start at $125. Larger estimates depend on the items, volume, weight, materials, access, distance, and disposal requirements. We confirm the price with you before loading.',
+  },
+  {
+    q: `What can you remove in ${location.name}?`,
+    a: 'Common requests include furniture, appliances, household clutter, and garage, basement, moving, or estate cleanouts. Tell us what you have so we can confirm whether it can be accepted.',
+  },
+  {
+    q: 'Do I need to move everything outside?',
+    a: 'No. Include where the items are and any stairs, narrow doorways, or distance to parking. A few clear photos can help us understand the work.',
+  },
+  {
+    q: 'How do I get an estimate?',
+    a: 'Start with your service ZIP, then share an item list and any useful photos. We review the scope and access with you and confirm the price before loading.',
+  },
+  {
+    q: 'Does a quote request book a pickup?',
+    a: 'No. A request is an estimate, not a confirmed pickup. Pickup timing is arranged separately after the details and availability are reviewed.',
+  },
+];
 ---
 
 <Layout
-  title={`${PRE_LAUNCH_MODE || !location.confirmed ? 'Junk Removal Planning' : 'Junk Removal'} in ${location.name}, PA`}
-  description={`Plan a ${location.name}, PA junk removal request with Resolve Junk Solutions. ${location.focus}. Share your project details and plan your pickup.`}
+  title={title}
+  description={description}
   noindex={!isIndexableLocation(location)}
-  crumbs={[
-    { name: 'Home', url: '/' },
-    { name: 'Service area', url: '/service-area' },
-    { name: location.name, url: `/service-area/${location.slug}` },
-  ]}
 >
-  <div class="wrap">
-    <section class="page-hero location-hero">
-      <div class="location-hero-copy">
-        <p class="eyebrow">SERVICE AREA · LANCASTER COUNTY</p>
-        <h1>
-          Making room
-          <br />
-          in {location.name}.
-        </h1>
-        <p>{location.tip}</p>
-        <CTA />
+  <section
+    class="new-hero town-hero"
+    style={`--town-photo-position: ${landmark.position}`}
+  >
+    <div class="hero-photo">
+      <Image
+        src={landmark.image}
+        alt={landmark.alt}
+        widths={[800, 1200, 1600, 2000]}
+        sizes="100vw"
+        format="webp"
+        quality={84}
+        loading="eager"
+        fetchpriority="high"
+        style={`object-position: ${landmark.position}`}
+      />
+    </div>
+    <div class="hero-shade" aria-hidden="true"></div>
+    <div class="wrap hero-inner">
+      <div class="hero-main">
+        <p class="eyebrow town-eyebrow">
+          <span class="status-dot" aria-hidden="true"></span> LANCASTER COUNTY ·{' '}
+          {location.name.toUpperCase()}, PA
+        </p>
+        <h1>Junk removal in {location.name}, PA</h1>
+        <p class="hero-deck">{location.tip}</p>
+        <div class="town-conversion">
+          <ZipStart id={`zip-${location.slug}`} town={location.slug} />
+        </div>
+        <div class="hero-reassurance town-reassurance">
+          <span>Single items from $125</span>
+          <span>Price confirmed before we load</span>
+        </div>
       </div>
-      <figure class="location-landmark">
-        <Image
-          src={landmark.image}
-          alt={landmark.alt}
-          widths={[480, 800, 1200, 1600]}
-          sizes="(max-width: 800px) calc(100vw - 40px), (max-width: 1240px) 46vw, 560px"
-          format="webp"
-          quality={80}
-          loading="eager"
-          fetchpriority="high"
-          style={`object-position: ${landmark.position}`}
-        />
-        <figcaption>
-          <span class="landmark-name">{landmark.name}</span>
-          <details class="landmark-credit">
-            <summary>Photo credit</summary>
-            <p>
-              <a href={landmark.source}>
-                {landmark.author} / Wikimedia Commons
-              </a>
-              {' · '}
-              <a href={landmark.licenseUrl} rel="license">
-                {landmark.license}
-              </a>
-              . Resized and cropped for display; image retains this license.
-            </p>
-          </details>
-        </figcaption>
-      </figure>
-    </section>
-    <section class="content-grid page-content">
-      <div>
-        <h2>
-          {PRE_LAUNCH_MODE ? 'Launching in' : 'Service coverage for'}{' '}
-          {location.name}
-        </h2>
-        <p>
-          {PRE_LAUNCH_MODE
-            ? `We’re preparing junk removal and cleanouts for Lancaster County. Tell us about your ${location.name} property and include its ZIP so we can review coverage.`
-            : `Plan your ${location.name} cleanout with us. Include your property’s ZIP and project details so we can review the pickup.`}
+    </div>
+  </section>
+
+  <section class="town-proof" aria-label="Local pickup details">
+    <span>Single items from $125</span>
+    <span>Lancaster County</span>
+    <a href={`tel:${business.phoneE164}`} data-event="phone_click">
+      {business.phone}
+    </a>
+    <span>Price confirmed before we load</span>
+  </section>
+
+  <section class="section wrap town-local-intro">
+    <p class="eyebrow">A LITTLE MORE ROOM, {location.name.toUpperCase()}</p>
+    <h2>Make space for what matters.</h2>
+    <p>{location.localParagraph}</p>
+  </section>
+
+  <section class="services-editorial town-services">
+    <div class="wrap">
+      <div class="section-heading town-section-heading">
+        <div>
+          <p class="eyebrow">
+            WAYS WE CAN HELP IN {location.name.toUpperCase()}
+          </p>
+          <h2>
+            WHAT NEEDS TO <em>GO?</em>
+          </h2>
+        </div>
+        <p class="heading-aside">
+          From one bulky item to a fuller cleanout, start with what you need
+          removed.
         </p>
-        <p>
-          Requests can describe a home, rental property, or a property you are
-          helping coordinate. Let us know who can approve removal, what needs to
-          stay, and how the items can be reached.
-        </p>
-        <h2>{location.focus}</h2>
-        <p>
-          Use the guides below to prepare an item list and useful photos. A
-          request starts a conversation about scope, access, and timing; it does
-          not book a crew or guarantee acceptance.
-        </p>
-        <a href="/pricing" class="text-link">
-          See how an estimate is put together ↗
+      </div>
+      <div class="town-service-grid">
+        {localServices.map((service) => (
+          <a
+            href={`/contact?town=${location.slug}&service=${serviceCategory[service.slug]}`}
+          >
+            <Icon name={service.icon} />
+            <h3>{service.title}</h3>
+            <p>{service.short}</p>
+            <span aria-hidden="true">↗</span>
+          </a>
+        ))}
+      </div>
+      <div class="service-bottom town-service-bottom">
+        <p>Tell us what you have. We’ll review the details with you.</p>
+        <a href="/services" class="text-link">
+          See all services <span aria-hidden="true">↗</span>
         </a>
       </div>
-      <aside class="callout">
-        <h2>From request to removal</h2>
-        <ol>
-          <li>Share the items, service ZIP, and preferred timing.</li>
-          <li>
-            Confirm coverage, accepted materials, access, and the estimate.
-          </li>
-          <li>Agree on a pickup date when scheduling is available.</li>
-        </ol>
-        <p>We do not maintain a separate office in {location.name}.</p>
-      </aside>
-    </section>
-    <section class="page-content">
-      <h2>Helpful services to explore</h2>
-      <ServiceGrid slugs={location.serviceSlugs} />
-    </section>
-    <section class="page-content">
-      <h2>Explore nearby communities</h2>
-      <div class="city-list">
-        {locations
-          .filter((l) => location.nearby.includes(l.slug))
-          .map((l) => (
-            <a href={`/service-area/${l.slug}`}>{l.name} ↗</a>
-          ))}
+    </div>
+  </section>
+
+  <section class="new-process town-process">
+    <div class="wrap section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">A CLEAR PLAN, FROM THE START</p>
+          <h2>
+            THREE STEPS.
+            <br />
+            <em>LESS TO WORRY ABOUT.</em>
+          </h2>
+        </div>
+        <p class="heading-aside">
+          A simple way to go from “this needs to go” to a plan you feel good
+          about.
+        </p>
       </div>
-    </section>
-  </div>
+      <div class="process-cards">
+        <article>
+          <span>01</span>
+          <h3>Tell us what’s going.</h3>
+          <p>
+            Start with your ZIP and share the items, where they are, and any
+            details that could help.
+          </p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Know the plan and price.</h3>
+          <p>
+            We review the scope and access with you. The price is confirmed
+            before anything is loaded.
+          </p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Choose what works.</h3>
+          <p>
+            If the estimate feels right, pickup timing can be discussed and
+            confirmed with you.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="estimate-band town-price">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">STRAIGHTFORWARD PRICING</p>
+        <h2>
+          SINGLE ITEMS
+          <br />
+          FROM <em>$125.</em>
+        </h2>
+      </div>
+      <div>
+        <p>
+          Every home and load is different. Larger estimates reflect volume,
+          weight, materials, access, distance, and disposal requirements. We
+          confirm the price with you before loading.
+        </p>
+        <a href="/pricing" class="text-link">
+          See how pricing works ↗
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap town-trust">
+    <div>
+      <p class="eyebrow">A LOCAL NAME. A PERSONAL STANDARD.</p>
+      <h2>
+        YOUR HOME.
+        <br />
+        <em>OUR WORD.</em>
+      </h2>
+    </div>
+    <p>
+      Resolve was founded by {business.owner.name}, a Lancaster County local and
+      military service member. We believe clear communication and respect for
+      your home should be part of every removal request.
+    </p>
+    <a href="/about" class="text-link">
+      Meet Resolve ↗
+    </a>
+  </section>
+
+  <section class="section wrap area-section town-nearby">
+    <div>
+      <p class="eyebrow">CLOSE TO {location.name.toUpperCase()}</p>
+      <h2>
+        NEIGHBORING
+        <br />
+        <em>COMMUNITIES.</em>
+      </h2>
+      <p>
+        Resolve Junk Solutions serves homes and businesses across Lancaster
+        County.
+      </p>
+    </div>
+    <div class="city-list">
+      {locations
+        .filter((nearby) => location.nearby.includes(nearby.slug))
+        .map((nearby) => (
+          <a href={`/service-area/${nearby.slug}`}>
+            {nearby.name}
+            <span aria-hidden="true">↗</span>
+          </a>
+        ))}
+    </div>
+  </section>
+
+  <section class="faq-section town-faq">
+    <div class="section wrap faq-grid">
+      <div>
+        <p class="eyebrow">BEFORE YOU ASK</p>
+        <h2>
+          GOOD QUESTIONS.
+          <br />
+          <em>STRAIGHT ANSWERS.</em>
+        </h2>
+        <a href="/contact" class="text-link">
+          Tell us about your project ↗
+        </a>
+      </div>
+      <div class="faq-list">
+        {faqs.map((faq) => (
+          <details>
+            <summary>
+              {faq.q}
+              <span aria-hidden="true">+</span>
+            </summary>
+            <p>{faq.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <p class="town-disclaimer">
+    A request is an estimate, not a confirmed pickup.
+  </p>
+
+  <section class="closing-quote town-closing">
+    <div class="wrap">
+      <p class="eyebrow">READY WHEN YOU ARE</p>
+      <h2>
+        LET’S MAKE
+        <br />
+        <em>ROOM.</em>
+      </h2>
+      <ZipStart id={`closing-zip-${location.slug}`} town={location.slug} />
+      <a
+        class="town-closing-phone"
+        href={`tel:${business.phoneE164}`}
+        data-event="phone_click"
+      >
+        Or call {business.phone}
+      </a>
+    </div>
+  </section>
 </Layout>
 
 <style>
-  .location-hero {
-    max-width: none;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  .town-hero {
+    min-height: 670px;
+  }
+  .town-hero .hero-photo img {
+    object-position: var(--town-photo-position, center 60%);
+  }
+  .town-hero .hero-shade {
+    background:
+      linear-gradient(
+        90deg,
+        rgba(9, 12, 10, 0.96) 0%,
+        rgba(9, 12, 10, 0.86) 40%,
+        rgba(9, 12, 10, 0.45) 66%,
+        rgba(9, 12, 10, 0.12) 100%
+      ),
+      linear-gradient(0deg, rgba(9, 12, 10, 0.25), transparent 40%);
+  }
+  .town-hero .hero-inner {
+    padding-block: 74px 78px;
+  }
+  .town-hero .hero-main {
+    max-width: 710px;
+  }
+  .town-hero .town-eyebrow {
+    margin-bottom: 21px;
+  }
+  .town-hero h1 {
+    max-width: 690px;
+    font-size: clamp(3.7rem, 6.2vw, 6.4rem);
+  }
+  .town-hero .hero-deck {
+    max-width: 570px;
+  }
+  .town-conversion {
+    display: flex;
+    align-items: end;
+    gap: 22px;
+    margin-top: 28px;
+  }
+  .town-conversion :global(.zip-start) {
+    flex: 0 0 490px;
+    width: 490px;
+    max-width: 490px;
+  }
+  .town-reassurance {
+    margin-top: 25px;
+  }
+  .town-proof {
+    min-height: 73px;
+    display: flex;
+    justify-content: center;
     align-items: center;
-    gap: clamp(24px, 4vw, 64px);
+    flex-wrap: wrap;
+    gap: 10px clamp(18px, 3vw, 42px);
+    padding: 17px 24px;
+    background: #f4f3ef;
+    border-bottom: 1px solid #e5e3dd;
+    color: #282924;
+    font-size: 0.8rem;
   }
-  .location-hero-copy {
-    min-width: 0;
+  .town-proof > * + * {
+    border-left: 1px solid #d5d2ca;
+    padding-left: clamp(18px, 3vw, 42px);
   }
-  .location-hero h1 {
-    font-size: clamp(2.8rem, 5.4vw, 4.8rem);
-  }
-  .location-hero-copy > p:not(.eyebrow) {
-    font-size: 1.1rem;
-    max-width: 38rem;
-  }
-  .location-landmark {
-    margin: 0;
-    min-width: 0;
-  }
-  .location-landmark img {
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    border-radius: 8px;
-    background: #eee;
-  }
-  figcaption {
-    border-top: 3px solid var(--orange);
-    margin-top: 14px;
-    padding-top: 12px;
-  }
-  .landmark-name {
-    display: block;
+  .town-proof a {
     font-weight: 700;
-    font-size: 0.9rem;
-  }
-  .landmark-credit {
-    margin-top: 4px;
-    color: #626262;
-    font-size: 0.75rem;
-  }
-  .landmark-credit summary {
-    cursor: pointer;
-    width: fit-content;
-    padding: 4px 0;
-  }
-  .landmark-credit p {
-    margin: 6px 0 0;
-    font-size: inherit;
-    line-height: 1.6;
-  }
-  .landmark-credit a {
     text-decoration: underline;
     text-underline-offset: 3px;
   }
-  @media (max-width: 800px) {
-    .location-hero {
+  .town-local-intro {
+    padding-block: 78px 68px;
+  }
+  .town-local-intro .eyebrow {
+    color: #686962;
+  }
+  .town-local-intro h2 {
+    max-width: 800px;
+    margin: 0 0 15px;
+    font-size: clamp(2.5rem, 5vw, 4.3rem);
+  }
+  .town-local-intro > p:last-child {
+    max-width: 830px;
+    margin: 0;
+    color: #555650;
+    font-size: 1.08rem;
+    line-height: 1.75;
+  }
+  .town-services {
+    padding-block: 68px 55px;
+  }
+  .town-section-heading {
+    align-items: end;
+  }
+  .town-service-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .town-service-grid > a {
+    min-height: 188px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 22px 23px;
+    border: 1px solid #e7e6e1;
+    border-radius: 8px;
+    background: #f6f6f4;
+    transition:
+      border-color 0.16s ease,
+      background 0.16s ease;
+  }
+  .town-service-grid > a:hover {
+    border-color: #e4773c;
+    background: #fff;
+  }
+  .town-service-grid svg {
+    width: 28px;
+    height: 28px;
+    color: #c9541b;
+    margin-bottom: 19px;
+  }
+  .town-service-grid h3 {
+    margin: 0 28px 6px 0;
+    font-size: 1.15rem;
+  }
+  .town-service-grid p {
+    margin: 0;
+    color: #62635d;
+    font-size: 0.83rem;
+    line-height: 1.55;
+  }
+  .town-service-grid > a > span:last-child {
+    position: absolute;
+    top: 20px;
+    right: 21px;
+    color: #c9541b;
+  }
+  .town-service-bottom {
+    padding-top: 22px;
+  }
+  .town-process .section {
+    padding-block: 78px;
+  }
+  .town-process .section-heading h2 {
+    font-size: clamp(2.7rem, 5vw, 4.35rem);
+  }
+  .town-price {
+    padding-block: 55px;
+  }
+  .town-price .wrap {
+    gap: clamp(35px, 8vw, 120px);
+  }
+  .town-price h2 {
+    font-size: clamp(2.8rem, 5vw, 4.4rem);
+  }
+  .town-trust {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    align-items: center;
+    column-gap: 9vw;
+    padding-block: 72px;
+  }
+  .town-trust h2 {
+    margin: 0;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+  }
+  .town-trust > p {
+    max-width: 600px;
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: #555650;
+  }
+  .town-trust > .text-link {
+    grid-column: 2;
+    margin-top: 18px;
+  }
+  .town-nearby {
+    padding-block: 70px;
+  }
+  .town-nearby h2 {
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+  }
+  .town-nearby .city-list {
+    min-width: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .town-nearby .city-list a {
+    min-width: 0;
+    font-size: clamp(1.7rem, 2.5vw, 2.5rem);
+  }
+  .town-faq .faq-grid {
+    padding-block: 70px;
+  }
+  .town-faq .faq-list details {
+    border-bottom: 1px solid #dadbd7;
+    padding: 19px 0;
+  }
+  .town-faq .faq-list summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    cursor: pointer;
+    font-weight: 650;
+    list-style: none;
+  }
+  .town-faq .faq-list summary::-webkit-details-marker {
+    display: none;
+  }
+  .town-faq .faq-list summary span {
+    color: #bd4a18;
+    font-size: 1.3rem;
+  }
+  .town-faq .faq-list details p {
+    max-width: 650px;
+    margin: 12px 35px 0 0;
+    color: #62635d;
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+  .town-disclaimer {
+    margin: 0;
+    padding: 16px 20px;
+    text-align: center;
+    color: #66665f;
+    font-size: 0.72rem;
+  }
+  .town-closing .wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .town-closing .zip-start {
+    width: min(100%, 520px);
+  }
+  .town-closing-phone {
+    margin-top: 16px;
+    color: #ece9e2;
+    font-size: 0.85rem;
+  }
+  @media (max-width: 760px) {
+    .town-hero {
+      min-height: 0;
+    }
+    .town-hero .hero-photo {
+      top: 0;
+    }
+    .town-hero .hero-photo img {
+      object-position: center 48%;
+    }
+    .town-hero .hero-shade {
+      background: linear-gradient(
+        180deg,
+        rgba(9, 12, 10, 0.94) 0%,
+        rgba(9, 12, 10, 0.89) 45%,
+        rgba(9, 12, 10, 0.74) 72%,
+        rgba(9, 12, 10, 0.55) 100%
+      );
+    }
+    .town-hero .hero-inner {
+      padding-block: 48px 52px;
+    }
+    .town-hero h1 {
+      font-size: clamp(3.15rem, 12.5vw, 5rem);
+    }
+    .town-conversion {
+      align-items: stretch;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .town-conversion :global(.zip-start) {
+      flex: 0 1 auto;
+      width: 100%;
+      max-width: 520px;
+    }
+    .town-proof {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      justify-items: start;
+      gap: 11px 14px;
+      padding: 17px 20px;
+      font-size: 0.71rem;
+    }
+    .town-proof > * + * {
+      border: 0;
+      padding: 0;
+    }
+    .town-local-intro {
+      padding-block: 54px 48px;
+    }
+    .town-local-intro > p:last-child {
+      font-size: 0.97rem;
+    }
+    .town-services {
+      padding-block: 48px 35px;
+    }
+    .town-service-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .town-service-grid > a {
+      min-height: 155px;
+      padding: 17px;
+    }
+    .town-service-grid svg {
+      width: 25px;
+      height: 25px;
+      margin-bottom: 12px;
+    }
+    .town-service-grid h3 {
+      font-size: 1rem;
+    }
+    .town-service-grid p {
+      font-size: 0.76rem;
+    }
+    .town-process .section {
+      padding-block: 54px;
+    }
+    .town-process .section-heading {
+      display: block;
+    }
+    .town-process .heading-aside {
+      margin-top: 16px;
+    }
+    .town-price {
+      padding-block: 43px;
+    }
+    .town-price .wrap {
+      gap: 25px;
+    }
+    .town-trust {
       grid-template-columns: 1fr;
-      gap: 28px;
+      row-gap: 19px;
+      padding-block: 52px;
     }
-    .location-hero h1 {
-      font-size: clamp(2.8rem, 9vw, 4.8rem);
+    .town-trust > .text-link {
+      grid-column: 1;
+      margin-top: 0;
     }
-    .location-landmark img {
-      aspect-ratio: 3 / 2;
+    .town-nearby {
+      grid-template-columns: minmax(0, 1fr);
+      padding-block: 52px;
+    }
+    .town-faq .faq-grid {
+      padding-block: 52px;
+    }
+    .town-faq .faq-grid > div:first-child {
+      margin-bottom: 25px;
+    }
+  }
+  @media (max-width: 390px) {
+    .town-service-grid {
+      grid-template-columns: 1fr;
+    }
+    .town-service-grid > a {
+      min-height: 135px;
     }
   }
 </style>

@@ -2,8 +2,9 @@
 import { quoteLabel, PRE_LAUNCH_MODE, launchStatus } from '../data/business';
 interface Props {
   id?: string;
+  town?: string;
 }
-const { id = 'hero-zip' } = Astro.props;
+const { id = 'hero-zip', town } = Astro.props;
 ---
 
 <form class="zip-start" action="/contact" method="get" data-zip-start>
@@ -28,6 +29,7 @@ const { id = 'hero-zip' } = Astro.props;
       {quoteLabel} <span aria-hidden="true">→</span>
     </button>
   </div>
+  {town && <input type="hidden" name="town" value={town} />}
   <p id={`${id}-help`}>
     {PRE_LAUNCH_MODE
       ? `${launchStatus} No booking or payment today.`

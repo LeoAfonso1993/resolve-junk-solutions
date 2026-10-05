@@ -56,16 +56,54 @@ for (const file of files) {
     file.includes('service-area/') &&
     !file.endsWith('service-area/index.html')
   )
-    assert.match(html, /noindex,follow/);
+    assert.match(html, /index,follow/);
   assert(!/tel:"|mailto:"|lorem ipsum|#1 junk/i.test(html));
 }
 const sitemap = await readFile('dist/sitemap.xml', 'utf8');
+assert.equal((sitemap.match(/<loc>/g) || []).length, 28);
 assert(
-  !/service-area\/[a-z]/.test(sitemap),
-  'Unconfirmed cities excluded from sitemap',
+  sitemap.includes('https://resolvejunksolutions.com/service-area/manheim-pa'),
 );
-assert.equal((sitemap.match(/<loc>/g) || []).length, 18);
 assert(sitemap.includes('https://resolvejunksolutions.com/terms'));
+assert(!sitemap.includes('workers.dev'));
+assert.equal((await readFile('dist/favicon.ico')).readUInt16LE(2), 1);
+assert((await readFile('dist/favicon.ico')).byteLength > 100);
+const manheim = await readFile(
+  'dist/service-area/manheim-pa/index.html',
+  'utf8',
+);
+assert.match(manheim, /<h1[^>]*>Junk removal in Manheim, PA<\/h1>/);
+assert.match(manheim, /name="zip"/);
+assert.match(manheim, /Single items from \$125/);
+assert.match(manheim, /717-742-0722/);
+assert.match(manheim, /Garage cleanouts/);
+assert.match(manheim, /Basement cleanouts/);
+assert.match(manheim, /class="town-service-grid"/);
+assert.equal((manheim.match(/class="town-service-grid"/g) || []).length, 1);
+assert.equal((manheim.match(/<details\b/g) || []).length, 6); // mobile nav + five town FAQs
+assert(!manheim.includes('We do not maintain a separate office'));
+for (const slug of [
+  'lancaster-pa',
+  'willow-street-pa',
+  'lititz-pa',
+  'manheim-pa',
+  'mount-joy-pa',
+  'elizabethtown-pa',
+  'ephrata-pa',
+  'columbia-pa',
+  'millersville-pa',
+  'strasburg-pa',
+  'denver-pa',
+]) {
+  const html = await readFile(`dist/service-area/${slug}/index.html`, 'utf8');
+  assert.match(html, /class="[^"]*\btown-hero\b[^"]*"/);
+  assert.match(html, /class="town-service-grid"/);
+  assert.match(html, /class="[^"]*\btown-local-intro\b[^"]*"/);
+  assert.match(html, /class="[^"]*\btown-nearby\b[^"]*"/);
+  assert.match(html, /class="[^"]*\btown-closing\b[^"]*"/);
+  assert.equal((html.match(/class="town-service-grid"/g) || []).length, 1);
+  assert.equal((html.match(/<details\b/g) || []).length, 6); // mobile nav + five town FAQs
+}
 console.log(
-  `PASS: ${files.length} HTML pages: unique metadata, one H1, valid JSON-LD, local links and assets; sitemap excludes provisional cities.`,
+  `PASS: ${files.length} HTML pages: unique metadata, one H1, valid JSON-LD, local links/assets, service-area template and production-only sitemap.`,
 );

@@ -40,6 +40,7 @@ const endpoint = import.meta.env.PUBLIC_LEAD_ENDPOINT || '';
         Start with the property’s ZIP code. We’re local to Lancaster County,
         Pennsylvania.
       </p>
+      <p id="quote-town-context" class="quote-town-context" hidden></p>
       <div class="field zip-field">
         <label for="zip">Service ZIP code *</label>
         <input
@@ -307,6 +308,7 @@ const endpoint = import.meta.env.PUBLIC_LEAD_ENDPOINT || '';
       name="mode"
       value={PRE_LAUNCH_MODE ? 'pre-launch' : 'live'}
     />
+    <input id="town" type="hidden" name="town" value="" />
     <input type="hidden" name="startedAt" />
     <div class="wizard-actions">
       <button class="back-button" type="button" id="previous-step" hidden>

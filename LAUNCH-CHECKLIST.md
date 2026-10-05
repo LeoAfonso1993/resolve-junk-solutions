@@ -15,7 +15,7 @@
 ## Business confirmation
 
 - [ ] Business hours and scheduling availability.
-- [ ] Confirm each city and ZIP coverage. `locations.ts` currently marks all eleven candidate communities unconfirmed.
+- [x] Publish the eleven owner-requested Lancaster County town pages with unique copy; confirm ZIP-level coverage as inquiries arrive and before adding other communities.
 - [ ] Add verified local operating/access details to each location before indexing; a different project tip is not enough to justify an SEO landing page.
 - [x] Publish the $125 single-item starting price and explain quote factors; larger-load dollar amounts remain unpublished.
 - [ ] Confirm operating scope, truck capacity, and quote terms as operations begin.
@@ -38,6 +38,6 @@
 
 ## Coverage and indexing
 
-- [ ] Set city `confirmed` only after coverage and useful local content are reviewed.
+- [x] Owner-requested town pages are confirmed and included in the production sitemap; review useful local details before adding other communities.
 - [ ] Review service descriptions, policies, privacy, metadata, and schema as operations are confirmed.
 - [ ] Submit sitemap to Search Console and verify indexing. Establish a service-area Google Business Profile without exposing a residential address.

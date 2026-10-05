@@ -1,6 +1,7 @@
 import { track } from './analytics';
 import { submitLead, validatePhotos } from './leads';
 import { intakeOptions } from '../data/intake';
+import { locations } from '../data/locations';
 const form = document.querySelector<HTMLFormElement>('#quote-form');
 if (form) {
   const panels = Array.from(
@@ -31,6 +32,31 @@ if (form) {
   const params = new URLSearchParams(location.search);
   const initialZip = params.get('zip');
   if (initialZip && /^\d{5}$/.test(initialZip)) input('zip').value = initialZip;
+  const townSlug = params.get('town') || '';
+  const town = locations.find((candidate) => candidate.slug === townSlug);
+  if (town) {
+    input('town').value = town.slug;
+    const context = document.querySelector<HTMLElement>('#quote-town-context');
+    if (context) {
+      context.textContent = `Service area: ${town.name}, PA. Confirm that the ZIP code matches the property.`;
+      context.hidden = false;
+    }
+  }
+  const selectedServices = (params.get('service') || '')
+    .split(',')
+    .filter((service) =>
+      intakeOptions.services.some(([value]) => value === service),
+    );
+  for (const service of selectedServices) {
+    const checkbox = form.querySelector<HTMLInputElement>(
+      `[name="categories"][value="${service}"]`,
+    );
+    if (checkbox) checkbox.checked = true;
+  }
+  const initialVolume = params.get('volume');
+  const volumeSelect = form.querySelector<HTMLSelectElement>('#volume');
+  if (initialVolume === 'single' && volumeSelect)
+    volumeSelect.value = 'single';
   const labelFor = (group: keyof typeof intakeOptions, value: string) =>
     intakeOptions[group].find((o) => o[0] === value)?.[1] || value;
   const values = () => new FormData(form);

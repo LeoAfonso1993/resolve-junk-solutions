@@ -33,13 +33,13 @@ const contact = read('contact/index.html');
 assert(contact.includes('As soon as available'));
 assert(!contact.includes('Within a week of launch'));
 assert(
-  read('service-area/lancaster-pa/index.html').includes('noindex,follow'),
-  'Unapproved location must not become indexable at launch',
+  read('service-area/lancaster-pa/index.html').includes('index,follow'),
+  'Owner-requested town landing pages are indexable on production',
 );
 assert(
   read('_headers').includes('https://:version.:subdomain.workers.dev/*'),
   'Preview protection survives launch',
 );
 console.log(
-  'PASS: isolated live-mode build; CTA, launch announcement, timing, metadata and schema switch; provisional areas remain noindex. Source and default build unchanged.',
+  'PASS: isolated live-mode build; CTA, launch announcement, timing, metadata and schema switch; approved town pages remain indexable. Source and default build unchanged.',
 );

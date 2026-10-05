@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "npm run build:worker && wrangler dev",
-    "build": "astro check && astro build",
+    "build": "npm run build:icons && astro check && astro build",
     "preview": "astro preview",
     "test": "node --experimental-strip-types --test tests/leads.test.ts",
     "check:site": "node scripts/check-site.mjs",

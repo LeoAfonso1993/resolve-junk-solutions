@@ -2,6 +2,7 @@ import { Buffer } from 'node:buffer';
 import { intakeOptions } from '../src/data/intake.ts';
 import { suggestPriority } from '../src/lib/pipeline.ts';
 import { validatePhotos } from '../src/lib/leads.ts';
+import { locations } from '../src/data/locations.ts';
 
 type LeadEnv = Env & { RESEND_API_KEY?: string };
 const MAX_BODY = 21 * 1024 * 1024;
@@ -69,7 +70,10 @@ export function validateLead(form: FormData) {
   if (field('website', 500))
     throw new RequestError('Unable to accept this request.');
   const name = field('name', 120, true),
-    zip = field('zip', 5, true);
+    zip = field('zip', 5, true),
+    townSlug = field('town', 40);
+  const town = locations.find((candidate) => candidate.slug === townSlug);
+  if (townSlug && !town) throw new RequestError('Invalid town.');
   const email = field('email', 254),
     phone = field('phone', 40);
   if (!/^\d{5}$/.test(zip)) throw new RequestError('Enter a five-digit ZIP.');
@@ -138,6 +142,7 @@ export function validateLead(form: FormData) {
     requestId,
     name,
     zip,
+    town: town?.name || '',
     email,
     phone,
     mode,
@@ -218,6 +223,7 @@ export function emailText(lead: ReturnType<typeof validateLead>) {
     `Phone: ${lead.phone || 'Not provided'}`,
     `Preferred contact: ${lead.contactPreference}`,
     `ZIP: ${lead.zip}`,
+    `Town page: ${lead.town || 'Not specified'}`,
     `Address: ${lead.address || 'Not provided'}`,
     '',
     `Items: ${lead.project.categories.map((c) => label('services', c)).join(', ')}`,
@@ -320,10 +326,45 @@ export async function receiveLead(
 }
 export default {
   async fetch(request, env) {
-    if (new URL(request.url).pathname === '/api/leads')
+    const url = new URL(request.url);
+    if (url.pathname === '/api/leads')
       return receiveLead(request, env);
-    if (new URL(request.url).pathname.startsWith('/api/'))
+    if (url.pathname.startsWith('/api/'))
       return json(404, { error: 'Not found.' });
-    return env.ASSETS.fetch(request);
+    const productionHost = url.hostname.toLowerCase() === 'resolvejunksolutions.com';
+    if (!productionHost && url.pathname === '/sitemap.xml')
+      return new Response(
+        '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>',
+        {
+          headers: {
+            'Content-Type': 'application/xml; charset=utf-8',
+            'X-Robots-Tag': 'noindex, nofollow',
+          },
+        },
+      );
+    const response = await env.ASSETS.fetch(request);
+    if (productionHost) return response;
+    const headers = new Headers(response.headers);
+    headers.set('X-Robots-Tag', 'noindex, nofollow');
+    const contentType = headers.get('Content-Type') || '';
+    if (!contentType.includes('text/html'))
+      return new Response(response.body, {
+        status: response.status,
+        statusText: response.statusText,
+        headers,
+      });
+    return new HTMLRewriter()
+      .on('meta[name="robots"]', {
+        element(element) {
+          element.setAttribute('content', 'noindex, nofollow');
+        },
+      })
+      .transform(
+        new Response(response.body, {
+          status: response.status,
+          statusText: response.statusText,
+          headers,
+        }),
+      );
   },
 } satisfies ExportedHandler<LeadEnv>;

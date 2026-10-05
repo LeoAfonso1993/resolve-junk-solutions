@@ -7,14 +7,14 @@
 - [ ] Confirm production `RESEND_API_KEY`, verified sending domain, and a real delivery test (including photos and retry/failure behavior).
 - [ ] Confirm accepted/restricted materials, handling, quote terms, payment methods, hours, and disposal/donation/recycling policies.
 - [ ] Review flagged FAQ answers and pricing methodology. Do not publish unconfirmed rates or same-day promises.
-- [ ] Deploy the reviewed static build. Check preview responses include `X-Robots-Tag: noindex`; production must not inherit that header. `public/_headers` applies to Cloudflare static asset responses. Custom Worker/SSR responses need equivalent headers in their handler.
+- [ ] Deploy the reviewed build. Check preview HTML and assets include `X-Robots-Tag: noindex, nofollow` and a matching robots meta tag; production must remain `index,follow`. The Worker handles HTML/sitemap requests and `public/_headers` protects static assets.
 - [ ] Keep robots crawling allowed so crawlers can see the noindex directive. Check apex/www HTTPS redirects without redirecting local development or preview to production.
 
 ## Launch day
 
 - [x] Production build defaults to `PRE_LAUNCH_MODE=false`; set it true only for an intentional pre-launch build.
 - [ ] Run `npm run build`, `npm test`, `npm run test:launch`, `npm run check:site`, and `npm run test:browser`.
-- [ ] Confirm coverage city by city. Set `confirmed` only for actual coverage; set `contentReady` separately after verified local content review. Both are required for sitemap/indexing eligibility.
+- [x] The eleven owner-requested Lancaster County town pages are production-indexable and included in the sitemap. Confirm ZIP-level coverage and local details before adding another community.
 - [ ] Confirm business hours and contact links. Perform one real mobile inquiry and verify receipt in the intended business inbox.
 - [ ] Verify production canonical, Open Graph, schema and sitemap URLs use `https://resolvejunksolutions.com`.
 - [ ] Review remaining provisional material/pricing/coverage policies; changing launch mode does not invent missing facts.
@@ -33,7 +33,7 @@
 
 - [ ] Connect the legitimate service-area Google Business Profile; never add a private home address to site schema just for rich results.
 - [ ] Verify Search Console, submit `/sitemap.xml`, inspect production indexing and preview exclusion.
-- [ ] Add verified local operating information to city pages before approving indexability. All eleven current city pages are provisional.
+- [x] The eleven current town pages have distinct local content and are indexable. Keep local service details accurate as availability changes.
 - [ ] Collect and publish legitimate reviews with source/permission; avoid self-serving aggregate ratings.
 - [ ] Connect consent-aware analytics to existing events, verify events contain no contact data, then assess ZIP-to-inquiry completion and real lead quality.
 - [ ] Measure deployed mobile Lighthouse and real-world Core Web Vitals. Local automated checks are not field performance evidence.

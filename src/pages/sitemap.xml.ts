@@ -11,7 +11,6 @@ export function GET() {
     '/contact',
     '/privacy',
     '/terms',
-    '/terms',
     ...services.map((s) => `/services/${s.slug}`),
     ...locations
       .filter(isIndexableLocation)

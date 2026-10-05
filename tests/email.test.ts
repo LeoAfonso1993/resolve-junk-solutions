@@ -139,6 +139,13 @@ test('client score and stage cannot override server email', () => {
   assert.match(text, /70\/100/);
   assert.match(text, /new_inquiry/);
 });
+test('selected service-area town is validated and included in the lead email', () => {
+  const f = form();
+  f.set('town', 'manheim-pa');
+  assert.match(emailText(validateLead(f)), /Town page: Manheim/);
+  f.set('town', 'invented-town');
+  assert.throws(() => validateLead(f), /town/);
+});
 test('body size is enforced without trusting content-length', async () => {
   const stream = new ReadableStream({
     start(c) {

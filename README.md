@@ -28,7 +28,7 @@ Browser tests use installed Google Chrome and a local server. The redesign has p
 
 - `src/data/business.ts`: identity, PRE_LAUNCH_MODE, contact fields, future feature slots, load categories.
 - `src/data/services.ts`: nine service guides with item examples, preparation, access, and restrictions.
-- `src/data/locations.ts`: eleven candidate communities with different project guidance. All unconfirmed, `noindex`, omitted from sitemap. These are provisional pages, not a completed local SEO campaign.
+- `src/data/locations.ts`: eleven owner-requested Lancaster County town pages with unique copy, confirmed for this service area and included in the production sitemap. Confirm ZIP-level coverage before adding another community.
 - `src/data/faqs.ts`: useful answers plus `needsConfirmation` policy flags.
 - `src/layouts/Layout.astro`: navigation, footer, metadata, schema, analytics hooks.
 - `src/components`: reusable CTAs, cards, illustration/photo slot, FAQ and lead form.
@@ -40,11 +40,11 @@ Browser tests use installed Google Chrome and a local server. The redesign has p
 
 ## Routes
 
-`/`, `/services`, `/pricing`, `/about`, `/service-area`, `/contact`, `/privacy`, `/terms`, custom 404, nine `/services/[slug]` pages, eleven provisional `/service-area/[slug]` pages. XML sitemap includes only indexable pages. No residential address or separate city offices are invented.
+`/`, `/services`, `/pricing`, `/about`, `/service-area`, `/contact`, `/privacy`, `/terms`, custom 404, nine `/services/[slug]` pages, eleven `/service-area/[slug]` pages. The production XML sitemap includes approved pages; staging hosts return an empty sitemap. No residential address or separate city offices are invented.
 
 ## Pre-launch and live mode
 
-Production copy is the default. Set `PRE_LAUNCH_MODE=true` only for an intentional pre-launch build; `npm run build:worker` defaults it to false and connects the same-origin lead endpoint. Unconfirmed city pages remain provisional independently of launch mode.
+Production copy is the default. Set `PRE_LAUNCH_MODE=true` only for an intentional pre-launch build; `npm run build:worker` defaults it to false and connects the same-origin lead endpoint. Non-production hosts are marked `noindex,nofollow` by the Worker.
 
 The public phone and email are configured in `src/data/business.ts`. Contact and footer links use the configured number; `SHOW_PHONE_CTA=false` controls prominent mobile call actions and can be enabled centrally later.
 
@@ -60,7 +60,7 @@ Review/gallery/booking slots exist in business config; render only real verified
 
 Each page has a unique title/description, canonical, social metadata, one H1, semantic content, and linked JSON-LD. Pre-launch uses Organization and WebSite; live mode adds LocalBusiness and service entities without fabricating address, hours, pricing or ratings. Schema validity does not guarantee Google rich-result eligibility. FAQs are visible HTML; no FAQ rich-result markup is included. Google retired that feature in 2026: https://developers.google.com/search/updates#june-2026
 
-AI-search preparation uses clear business/service relationships and useful answers, not hidden crawler text or ranking promises. Candidate location content needs verified local service/access details before indexing, even after coverage is confirmed.
+Search preparation uses clear business/service relationships and useful answers, not hidden crawler text or ranking promises. Keep local service and access details accurate as coverage changes.
 
 `resolve:analytics` CustomEvents expose quote, phone, email, form-start, form-step, successful-submission, photo-count, service-page, and location-page events without submitted personal data. A Cloudflare Web Analytics beacon is prepared but loads only when `PUBLIC_CF_WEB_ANALYTICS_TOKEN` is supplied at build time; it measures visits/performance, while a separate provider is needed to collect business interaction events. Configure Search Console outside the codebase.
 
