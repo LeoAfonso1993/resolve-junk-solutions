@@ -1110,6 +1110,10 @@ h3 {
   .hero-photo {
     top: 140px;
   }
+  .home-hero .hero-photo {
+    top: auto;
+    aspect-ratio: 1672 / 941;
+  }
   .hero-reassurance {
     gap: 15px;
     font-size: 0.55rem;
